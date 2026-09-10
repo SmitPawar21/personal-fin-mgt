@@ -10,13 +10,21 @@ exports.getSummary = async (req, res) => {
 
     let totalIncome = 0;
     let totalExpenses = 0;
+    let totalUpiExpenses = 0;
     
     let monthlyIncome = 0;
     let monthlyExpenses = 0;
+    let monthlyUpiExpenses = 0;
 
     // Aggregate all-time
     allIncome.forEach(inc => totalIncome += Number(inc.amount || 0));
-    allExpenses.forEach(exp => totalExpenses += Number(exp.amount || 0));
+    allExpenses.forEach(exp => {
+      const amt = Number(exp.amount || 0);
+      totalExpenses += amt;
+      if (exp.upi_transaction === 'YES' || exp.upi_transaction === true || exp.upi_transaction === 'true') {
+        totalUpiExpenses += amt;
+      }
+    });
 
     // Aggregate monthly if month is provided
     if (month) {
@@ -27,7 +35,11 @@ exports.getSummary = async (req, res) => {
       });
       allExpenses.forEach(exp => {
         if (exp.date && exp.date.startsWith(month)) {
-          monthlyExpenses += Number(exp.amount || 0);
+          const amt = Number(exp.amount || 0);
+          monthlyExpenses += amt;
+          if (exp.upi_transaction === 'YES' || exp.upi_transaction === true || exp.upi_transaction === 'true') {
+            monthlyUpiExpenses += amt;
+          }
         }
       });
     }
@@ -35,9 +47,11 @@ exports.getSummary = async (req, res) => {
     res.json({
       totalIncome,
       totalExpenses,
+      totalUpiExpenses,
       overallSavings: totalIncome - totalExpenses,
       monthlyIncome: month ? monthlyIncome : totalIncome,
       monthlyExpenses: month ? monthlyExpenses : totalExpenses,
+      monthlyUpiExpenses: month ? monthlyUpiExpenses : totalUpiExpenses,
       monthlySavings: month ? (monthlyIncome - monthlyExpenses) : (totalIncome - totalExpenses),
     });
   } catch (error) {

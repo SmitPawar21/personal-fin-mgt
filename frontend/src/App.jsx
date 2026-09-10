@@ -8,6 +8,7 @@ import Expenses from './pages/Expenses';
 import Savings from './pages/Savings';
 import Budgets from './pages/Budgets';
 import Goals from './pages/Goals';
+import Investments from './pages/Investments';
 
 function AppRoutes() {
   const { user } = useAuth();
@@ -27,6 +28,7 @@ function AppRoutes() {
         <Route path="savings" element={<Savings />} />
         <Route path="budgets" element={<Budgets />} />
         <Route path="goals" element={<Goals />} />
+        <Route path="investments" element={<Investments />} />
       </Route>
     </Routes>
   );

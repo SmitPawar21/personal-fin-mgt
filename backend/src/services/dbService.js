@@ -14,7 +14,7 @@ const SCHEMAS = {
   Savings: ['id', 'date', 'amount', 'source', 'created_by', 'created_at', 'updated_at', 'description'],
   SavingsGoals: ['id', 'name', 'target_amount', 'current_amount', 'deadline', 'created_by', 'created_at', 'updated_at'],
   Budgets: ['id', 'category', 'month', 'year', 'amount', 'created_by', 'created_at', 'updated_at'],
-  Investments: ['id', 'type', 'asset_name', 'amount', 'purchase_date', 'current_value', 'created_by', 'created_at', 'updated_at'],
+  Investments: ['id', 'type', 'asset_name', 'amount', 'purchase_date', 'current_value', 'created_by', 'created_at', 'updated_at', 'description'],
   Categories: ['id', 'name', 'type', 'created_at', 'updated_at'],
   AuditLog: ['id', 'entity', 'entity_id', 'operation', 'changes', 'performed_by', 'timestamp'],
   System: ['key', 'value', 'updatedAt']

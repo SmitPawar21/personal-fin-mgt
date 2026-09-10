@@ -1,6 +1,6 @@
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { LogOut, LayoutDashboard, Receipt, PiggyBank, Wallet, Target } from 'lucide-react';
+import { LogOut, LayoutDashboard, Receipt, PiggyBank, Wallet, Target, Landmark } from 'lucide-react';
 
 function Layout() {
   const { user, logout } = useAuth();
@@ -12,6 +12,7 @@ function Layout() {
     { name: 'Savings & Income', path: '/savings', icon: <PiggyBank className="w-5 h-5" /> },
     { name: 'Budgets', path: '/budgets', icon: <Wallet className="w-5 h-5" /> },
     { name: 'Goals', path: '/goals', icon: <Target className="w-5 h-5" /> },
+    { name: 'Investments', path: '/investments', icon: <Landmark className="w-5 h-5" /> },
   ];
 
   return (

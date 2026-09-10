@@ -24,3 +24,9 @@ export const deleteGoal = async (id) => (await api.delete(`/goals/${id}`)).data;
 
 // Analytics
 export const getAnalyticsSummary = async (params = {}) => (await api.get('/analytics/summary', { params })).data;
+
+// Investments
+export const getInvestments = async () => (await api.get('/investments')).data;
+export const createInvestment = async (data) => (await api.post('/investments', data)).data;
+export const updateInvestment = async (id, data) => (await api.put(`/investments/${id}`, data)).data;
+export const deleteInvestment = async (id) => (await api.delete(`/investments/${id}`)).data;
