@@ -5,6 +5,9 @@ import Layout from './components/Layout';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Expenses from './pages/Expenses';
+import Savings from './pages/Savings';
+import Budgets from './pages/Budgets';
+import Goals from './pages/Goals';
 
 function AppRoutes() {
   const { user } = useAuth();
@@ -21,6 +24,9 @@ function AppRoutes() {
       >
         <Route index element={<Dashboard />} />
         <Route path="expenses" element={<Expenses />} />
+        <Route path="savings" element={<Savings />} />
+        <Route path="budgets" element={<Budgets />} />
+        <Route path="goals" element={<Goals />} />
       </Route>
     </Routes>
   );

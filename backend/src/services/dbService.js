@@ -10,7 +10,8 @@ const MAX_BACKUPS = 50;
 const SCHEMAS = {
   Users: ['id', 'username', 'password_hash', 'role', 'created_at', 'updated_at'],
   Expenses: ['id', 'date', 'amount', 'description', 'category', 'upi_transaction', 'created_by', 'created_at', 'updated_by', 'updated_at'],
-  Savings: ['id', 'date', 'amount', 'source', 'created_by', 'created_at', 'updated_at'],
+  Income: ['id', 'date', 'amount', 'description', 'created_by', 'created_at', 'updated_by', 'updated_at'],
+  Savings: ['id', 'date', 'amount', 'source', 'created_by', 'created_at', 'updated_at', 'description'],
   SavingsGoals: ['id', 'name', 'target_amount', 'current_amount', 'deadline', 'created_by', 'created_at', 'updated_at'],
   Budgets: ['id', 'category', 'month', 'year', 'amount', 'created_by', 'created_at', 'updated_at'],
   Investments: ['id', 'type', 'asset_name', 'amount', 'purchase_date', 'current_value', 'created_by', 'created_at', 'updated_at'],
@@ -49,11 +50,20 @@ class DBService {
             sheet.columns = columns.map(c => ({ header: c, key: c, width: 20 }));
             needsSave = true;
           } else {
-            // Check if headers are correct, if not we could update them, but for now just basic existence
+            // Check if headers are missing and append them safely
             const firstRow = sheet.getRow(1);
             if (!firstRow.values || firstRow.values.length <= 1) {
               sheet.columns = columns.map(c => ({ header: c, key: c, width: 20 }));
               needsSave = true;
+            } else {
+              columns.forEach((colName, index) => {
+                const cell = firstRow.getCell(index + 1);
+                if (!cell.value) {
+                  cell.value = colName;
+                  needsSave = true;
+                }
+              });
+              if (needsSave) firstRow.commit();
             }
           }
         }

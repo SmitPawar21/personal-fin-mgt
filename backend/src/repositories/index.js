@@ -6,6 +6,9 @@ class UserRepository extends BaseRepository {
 class ExpenseRepository extends BaseRepository {
   constructor() { super('Expenses'); }
 }
+class IncomeRepository extends BaseRepository {
+  constructor() { super('Income'); }
+}
 class SavingsRepository extends BaseRepository {
   constructor() { super('Savings'); }
 }
@@ -28,6 +31,7 @@ class AuditLogRepository extends BaseRepository {
 module.exports = {
   UserRepository: new UserRepository(),
   ExpenseRepository: new ExpenseRepository(),
+  IncomeRepository: new IncomeRepository(),
   SavingsRepository: new SavingsRepository(),
   SavingsGoalRepository: new SavingsGoalRepository(),
   BudgetRepository: new BudgetRepository(),
