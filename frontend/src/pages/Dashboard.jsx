@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react'
 import api from '../lib/api'
-import { Server, Database, Activity, AlertCircle, LogOut } from 'lucide-react'
+import { Server, Database, Activity, AlertCircle } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 
 function Dashboard() {
   const [healthStatus, setHealthStatus] = useState(null)
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(true)
-  const { user, logout } = useAuth()
+  const { user } = useAuth()
 
   useEffect(() => {
     const checkHealth = async () => {
@@ -25,16 +25,10 @@ function Dashboard() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center p-4">
-      <div className="w-full max-w-md flex justify-between items-center mb-6">
-        <h1 className="text-xl font-bold text-foreground">Welcome, {user?.username}</h1>
-        <button 
-          onClick={logout}
-          className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
-        >
-          <LogOut className="w-4 h-4" />
-          Logout
-        </button>
+    <div className="flex flex-col items-start gap-6">
+      <div>
+        <h1 className="text-3xl font-bold text-foreground">Welcome back, {user?.username}</h1>
+        <p className="text-muted-foreground mt-1">Here is the overview of your system.</p>
       </div>
       
       <div className="bg-card w-full max-w-md border border-border rounded-lg shadow-sm p-6">
@@ -79,4 +73,4 @@ function Dashboard() {
   )
 }
 
-export default App
+export default Dashboard

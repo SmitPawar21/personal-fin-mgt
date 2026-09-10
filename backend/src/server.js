@@ -4,6 +4,8 @@ const env = require('./config/env');
 const logger = require('./utils/logger');
 const healthRoutes = require('./routes/healthRoutes');
 const authRoutes = require('./routes/authRoutes');
+const expenseRoutes = require('./routes/expenseRoutes');
+const categoryRoutes = require('./routes/categoryRoutes');
 const errorHandler = require('./middlewares/errorHandler');
 
 const app = express();
@@ -16,6 +18,8 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use('/api/health', healthRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/expenses', expenseRoutes);
+app.use('/api/categories', categoryRoutes);
 
 // Global Error Handler
 app.use(errorHandler);

@@ -1,8 +1,10 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
+import Layout from './components/Layout';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
+import Expenses from './pages/Expenses';
 
 function AppRoutes() {
   const { user } = useAuth();
@@ -13,11 +15,13 @@ function AppRoutes() {
         path="/" 
         element={
           <ProtectedRoute>
-            <Dashboard />
+            <Layout />
           </ProtectedRoute>
         } 
-      />
-      {/* Add more protected routes here later */}
+      >
+        <Route index element={<Dashboard />} />
+        <Route path="expenses" element={<Expenses />} />
+      </Route>
     </Routes>
   );
 }
