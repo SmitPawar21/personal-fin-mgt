@@ -39,21 +39,18 @@ function Expenses() {
 
   useEffect(() => {
     fetchExpenses();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters]);
 
   const handleSave = async (expenseData) => {
-    try {
-      if (editingExpense) {
-        await updateExpense(editingExpense.id, expenseData);
-      } else {
-        await createExpense(expenseData);
-      }
-      setIsFormOpen(false);
-      setEditingExpense(null);
-      fetchExpenses(); // Refresh list
-    } catch (error) {
-      throw error; // Let the form handle the error display
+    if (editingExpense) {
+      await updateExpense(editingExpense.id, expenseData);
+    } else {
+      await createExpense(expenseData);
     }
+    setIsFormOpen(false);
+    setEditingExpense(null);
+    fetchExpenses(); // Refresh list
   };
 
   const handleDelete = async (id) => {

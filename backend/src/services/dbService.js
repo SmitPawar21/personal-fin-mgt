@@ -183,6 +183,34 @@ class DBService {
       }
     });
   }
+
+  async restoreBackup() {
+    return this.mutex.runExclusive(async () => {
+      try {
+        if (!fs.existsSync(this.backupDir)) {
+          throw new Error('Backup directory does not exist');
+        }
+
+        const files = await fs.promises.readdir(this.backupDir);
+        const backups = files
+          .filter(f => f.startsWith('database-') && f.endsWith('.xlsx'))
+          .map(f => ({ name: f, path: path.join(this.backupDir, f), time: fs.statSync(path.join(this.backupDir, f)).mtime.getTime() }))
+          .sort((a, b) => b.time - a.time); // newest first
+        
+        if (backups.length === 0) {
+          throw new Error('No backups available to restore');
+        }
+
+        const latestBackup = backups[0];
+        await fs.promises.copyFile(latestBackup.path, this.filePath);
+        logger.info(`Restored database from backup: ${latestBackup.name}`);
+        return { success: true, message: `Restored database from ${latestBackup.name}` };
+      } catch (error) {
+        logger.error(`Backup restoration failed: ${error.message}`);
+        throw error;
+      }
+    });
+  }
 }
 
 module.exports = new DBService();

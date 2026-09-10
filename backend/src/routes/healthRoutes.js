@@ -3,5 +3,6 @@ const router = express.Router();
 const healthController = require('../controllers/healthController');
 
 router.get('/', healthController.getHealth);
+router.post('/repair', healthController.repairDb);
 
 module.exports = router;

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
-import { getAnalyticsSummary, getInvestments, getBudgets, getGoals, getSavings } from '../lib/apiService'
+import { getAnalyticsSummary, getInvestments, getBudgets, getGoals } from '../lib/apiService'
 import { getExpenses } from '../lib/expenseService'
-import { Activity, AlertCircle, SmartphoneNfc, Landmark, Target, Wallet, Calendar, TrendingUp, TrendingDown, Clock } from 'lucide-react'
+import { AlertCircle, SmartphoneNfc, Landmark, Target, Wallet, Calendar, TrendingUp, TrendingDown, Clock } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 
 function Dashboard() {
@@ -18,7 +18,6 @@ function Dashboard() {
   const [expenses, setExpenses] = useState([]);
   const [budgets, setBudgets] = useState([]);
   const [goals, setGoals] = useState([]);
-  const [savingsCards, setSavingsCards] = useState([]);
   const [investmentsData, setInvestmentsData] = useState(null);
 
   useEffect(() => {
@@ -31,14 +30,12 @@ function Dashboard() {
           expData,
           budData,
           goalsData,
-          savData,
           invData
         ] = await Promise.all([
           getAnalyticsSummary({ month: selectedMonth }),
           getExpenses({ month: selectedMonth }),
           getBudgets({ month: selectedMonth }),
           getGoals(),
-          getSavings(),
           getInvestments()
         ]);
         
@@ -46,7 +43,6 @@ function Dashboard() {
         setExpenses(expData);
         setBudgets(budData);
         setGoals(goalsData);
-        setSavingsCards(savData);
         
         const totalInvested = invData.reduce((sum, i) => sum + Number(i.amount), 0);
         const currentValue = invData.reduce((sum, i) => sum + Number(i.current_value), 0);

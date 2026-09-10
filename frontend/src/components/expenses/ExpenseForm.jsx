@@ -25,6 +25,7 @@ function ExpenseForm({ expense, onSave, onCancel }) {
         upi_transaction: expense.upi_transaction === 'YES' || expense.upi_transaction === true,
       });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [expense]);
 
   const handleChange = (e) => {

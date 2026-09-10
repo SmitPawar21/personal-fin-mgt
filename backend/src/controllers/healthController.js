@@ -23,6 +23,16 @@ const getHealth = async (req, res, next) => {
   }
 };
 
+const repairDb = async (req, res, next) => {
+  try {
+    const result = await dbService.restoreBackup();
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
-  getHealth
+  getHealth,
+  repairDb
 };

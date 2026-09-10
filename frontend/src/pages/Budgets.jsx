@@ -15,27 +15,37 @@ function Budgets() {
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState({ category: 'Overall', amount: '' });
 
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const [budData, expData, catData] = await Promise.all([
-        getBudgets({ month: selectedMonth }),
-        getExpenses({ month: selectedMonth }),
-        getCategories()
-      ]);
-      setBudgets(budData);
-      setExpenses(expData);
-      setCategories(catData);
-    } catch (err) {
-      console.error('Failed to fetch budget data', err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const [budData, expData, catData] = await Promise.all([
+          getBudgets({ month: selectedMonth }),
+          getExpenses({ month: selectedMonth }),
+          getCategories()
+        ]);
+        setBudgets(budData);
+        setExpenses(expData);
+        setCategories(catData);
+      } catch (err) {
+        console.error('Failed to fetch budget data', err);
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchData();
   }, [selectedMonth]);
+
+  const refreshData = async () => {
+    const [budData, expData, catData] = await Promise.all([
+      getBudgets({ month: selectedMonth }),
+      getExpenses({ month: selectedMonth }),
+      getCategories()
+    ]);
+    setBudgets(budData);
+    setExpenses(expData);
+    setCategories(catData);
+  };
 
   const handleSave = async (e) => {
     e.preventDefault();
@@ -48,7 +58,7 @@ function Budgets() {
       });
       setShowForm(false);
       setForm({ category: 'Overall', amount: '' });
-      fetchData();
+      refreshData();
     } catch (err) {
       alert(err.response?.data?.error || 'Failed to save budget');
     }
@@ -57,7 +67,7 @@ function Budgets() {
   const handleDelete = async (id) => {
     if (window.confirm('Delete this budget?')) {
       await deleteBudget(id);
-      fetchData();
+      refreshData();
     }
   };
 
