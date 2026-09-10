@@ -1,0 +1,24 @@
+{
+  "name": "personal-finance-mgt",
+  "version": "1.0.0",
+  "description": "Personal and Family Finance Management App",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev -w backend\" \"npm run dev -w frontend\"",
+    "start": "concurrently \"npm start -w backend\" \"npm start -w frontend\"",
+    "install:all": "npm install"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "axios": "^1.20.0",
+    "lucide-react": "^1.44.0",
+    "tailwindcss": "^4.3.3"
+  }
+}
