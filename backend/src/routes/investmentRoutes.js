@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const investmentController = require('../controllers/investmentController');
-const { verifyToken } = require('../middlewares/authMiddleware');
+const verifyToken = require('../middlewares/authMiddleware');
 
 router.use(verifyToken);
 router.get('/', investmentController.getInvestments);

@@ -1,5 +1,10 @@
 import api from './api';
 
+// Auth
+export const verifyFamilyPassword = async (password) => (await api.post('/auth/verify-family', { password })).data;
+export const getUsers = async () => (await api.get('/auth/users')).data;
+export const registerUser = async (username, password) => (await api.post('/auth/register', { username, password })).data;
+
 // Income
 export const getIncome = async (params = {}) => (await api.get('/income', { params })).data;
 export const createIncome = async (data) => (await api.post('/income', data)).data;

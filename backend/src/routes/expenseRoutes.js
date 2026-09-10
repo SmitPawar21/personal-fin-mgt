@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const expenseController = require('../controllers/expenseController');
-const { verifyToken } = require('../middlewares/authMiddleware');
+const verifyToken = require('../middlewares/authMiddleware');
 
 // All expense routes require authentication
 router.use(verifyToken);
