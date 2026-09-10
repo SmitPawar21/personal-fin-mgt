@@ -4,7 +4,7 @@ const logger = require('../utils/logger');
 // Get all expenses with optional filters
 exports.getExpenses = async (req, res) => {
   try {
-    const { month, category, upi_transaction, search } = req.query;
+    const { month, category, upi_transaction, search, limit } = req.query;
 
     // We fetch all and then apply advanced filters in memory
     // because BaseRepository find() only supports exact match.
@@ -38,6 +38,11 @@ exports.getExpenses = async (req, res) => {
 
     // Sort by date descending
     expenses.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    // Apply limit if provided
+    if (limit) {
+      expenses = expenses.slice(0, parseInt(limit, 10));
+    }
 
     res.json(expenses);
   } catch (error) {
