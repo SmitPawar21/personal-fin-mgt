@@ -20,9 +20,9 @@ function Layout() {
   return (
     <div className="min-h-screen bg-background flex flex-col md:flex-row text-foreground">
       {/* Mobile Header */}
-      <div className="md:hidden flex items-center justify-between p-4 bg-card border-b border-border z-50 sticky top-0">
-        <h1 className="text-xl font-bold text-primary">Finance App</h1>
-        <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="p-2 text-muted-foreground hover:bg-muted rounded-md transition-colors">
+      <div className="md:hidden flex items-center justify-between p-4 bg-secondary text-secondary-foreground border-b border-border z-50 sticky top-0">
+        <h1 className="text-xl font-bold text-secondary-foreground">Finance App</h1>
+        <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="p-2 text-secondary-foreground/80 hover:bg-primary/50 rounded-none transition-colors cursor-pointer">
           {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </div>
@@ -30,11 +30,11 @@ function Layout() {
       {/* Sidebar */}
       <aside className={`
         ${mobileMenuOpen ? 'flex' : 'hidden'} 
-        md:flex flex-col w-full md:w-64 bg-card border-r border-border
+        md:flex flex-col w-full md:w-64 bg-secondary text-secondary-foreground border-r border-border
         fixed md:relative z-40 h-[calc(100vh-73px)] md:h-screen top-[73px] md:top-0
       `}>
         <div className="p-6 hidden md:block">
-          <h1 className="text-2xl font-bold text-primary">Finance App</h1>
+          <h1 className="text-2xl font-bold text-secondary-foreground">Finance App</h1>
         </div>
         <nav className="flex-1 px-4 py-4 md:py-0 space-y-2 overflow-y-auto">
           {navItems.map((item) => (
@@ -42,10 +42,10 @@ function Layout() {
               key={item.name}
               to={item.path}
               onClick={() => setMobileMenuOpen(false)}
-              className={`flex items-center gap-3 px-4 py-3 rounded-md transition-colors ${
+              className={`flex items-center gap-3 px-4 py-3 rounded-none transition-colors cursor-pointer ${
                 location.pathname === item.path
-                  ? 'bg-primary text-primary-foreground'
-                  : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                  ? 'bg-primary text-primary-foreground border-l-4 border-primary-foreground'
+                  : 'text-secondary-foreground/80 hover:bg-primary/50 hover:text-secondary-foreground border-l-4 border-transparent'
               }`}
             >
               {item.icon}
@@ -61,7 +61,7 @@ function Layout() {
             </div>
             <button
               onClick={logout}
-              className="p-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors"
+              className="p-2 text-secondary-foreground/80 hover:text-secondary-foreground hover:bg-primary/50 rounded-none transition-colors cursor-pointer"
               title="Logout"
             >
               <LogOut className="w-5 h-5" />

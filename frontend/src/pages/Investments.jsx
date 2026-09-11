@@ -63,7 +63,7 @@ function Investments() {
         </div>
         <button
           onClick={() => { setForm({ id: null, asset_name: '', type: 'Mutual Fund', amount: '', current_value: '', purchase_date: new Date().toISOString().split('T')[0], description: '' }); setShowForm(!showForm); }}
-          className="flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded font-medium hover:bg-primary/90 text-sm transition-colors"
+          className="flex items-center gap-2 bg-primary text-primary-foreground cursor-pointer px-4 py-2 rounded-none font-medium hover:bg-muted text-sm transition-colors"
         >
           <Plus className="w-4 h-4" /> Add Investment
         </button>
@@ -75,49 +75,49 @@ function Investments() {
         <>
           {/* Top Metrics */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-card p-6 rounded-lg border border-border shadow-sm flex items-center justify-between">
+            <div className="bg-card p-6 rounded-none border border-border  flex items-center justify-between">
               <div>
                 <h3 className="text-sm font-medium text-muted-foreground">Total Invested</h3>
                 <p className="text-2xl font-bold text-foreground mt-1">₹{totalInvested.toFixed(2)}</p>
               </div>
-              <div className="bg-muted p-3 rounded-full"><Landmark className="w-6 h-6 text-muted-foreground" /></div>
+              <div className="bg-muted p-3 rounded-none"><Landmark className="w-6 h-6 text-muted-foreground" /></div>
             </div>
             
-            <div className="bg-card p-6 rounded-lg border border-border shadow-sm flex items-center justify-between">
+            <div className="bg-card p-6 rounded-none border border-border  flex items-center justify-between">
               <div>
                 <h3 className="text-sm font-medium text-muted-foreground">Current Total Value</h3>
                 <p className="text-2xl font-bold text-foreground mt-1">₹{currentTotalValue.toFixed(2)}</p>
               </div>
             </div>
 
-            <div className={`bg-card p-6 rounded-lg border shadow-sm flex items-center justify-between ${totalGainLoss >= 0 ? 'border-green-500/20 bg-green-50/10' : 'border-red-500/20 bg-red-50/10'}`}>
+            <div className={`bg-card p-6 rounded-none border  flex items-center justify-between ${totalGainLoss >= 0 ? 'border-positive bg-muted' : 'border-negative bg-muted'}`}>
               <div>
                 <h3 className="text-sm font-medium text-muted-foreground">Overall Gain/Loss</h3>
                 <div className="flex items-center gap-2 mt-1">
-                  <p className={`text-2xl font-bold ${totalGainLoss >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                  <p className={`text-2xl font-bold ${totalGainLoss >= 0 ? 'text-positive' : 'text-negative'}`}>
                     {totalGainLoss >= 0 ? '+' : '-'}₹{Math.abs(totalGainLoss).toFixed(2)}
                   </p>
-                  <span className={`text-sm font-medium px-2 py-0.5 rounded ${totalGainLoss >= 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                  <span className={`text-sm font-medium px-2 py-0.5 rounded-none ${totalGainLoss >= 0 ? 'bg-muted text-positive' : 'bg-muted text-negative'}`}>
                     {totalGainLoss >= 0 ? '+' : ''}{totalGainLossPercent.toFixed(2)}%
                   </span>
                 </div>
               </div>
-              {totalGainLoss >= 0 ? <TrendingUp className="w-8 h-8 text-green-500 opacity-50" /> : <TrendingDown className="w-8 h-8 text-red-500 opacity-50" />}
+              {totalGainLoss >= 0 ? <TrendingUp className="w-8 h-8 text-positive opacity-50" /> : <TrendingDown className="w-8 h-8 text-negative opacity-50" />}
             </div>
           </div>
 
           {/* Form */}
           {showForm && (
-            <form onSubmit={handleSave} className="bg-card p-6 rounded-lg border border-border shadow-sm space-y-4 animate-in slide-in-from-top-2">
+            <form onSubmit={handleSave} className="bg-card p-6 rounded-none border border-border  space-y-4 animate-in slide-in-from-top-2">
               <h3 className="text-lg font-bold">{form.id ? 'Edit Investment' : 'Add New Investment'}</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
                 <div className="lg:col-span-2">
                   <label className="block text-sm font-medium mb-1">Asset Name</label>
-                  <input type="text" required placeholder="e.g. VTSAX" value={form.asset_name} onChange={e => setForm({...form, asset_name: e.target.value})} className="w-full rounded border border-input bg-background px-3 py-2 text-sm" />
+                  <input type="text" required placeholder="e.g. VTSAX" value={form.asset_name} onChange={e => setForm({...form, asset_name: e.target.value})} className="w-full rounded-none border border-input bg-background px-3 py-2 text-sm" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-1">Type</label>
-                  <select value={form.type} onChange={e => setForm({...form, type: e.target.value})} className="w-full rounded border border-input bg-background px-3 py-2 text-sm">
+                  <select value={form.type} onChange={e => setForm({...form, type: e.target.value})} className="w-full rounded-none border border-input bg-background px-3 py-2 text-sm">
                     <option value="Mutual Fund">Mutual Fund</option>
                     <option value="ETF">ETF</option>
                     <option value="Stock">Stock</option>
@@ -127,26 +127,26 @@ function Investments() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-1">Amount Invested</label>
-                  <input type="number" required step="0.01" min="0" value={form.amount} onChange={e => setForm({...form, amount: e.target.value})} className="w-full rounded border border-input bg-background px-3 py-2 text-sm" />
+                  <input type="number" required step="0.01" min="0" value={form.amount} onChange={e => setForm({...form, amount: e.target.value})} className="w-full rounded-none border border-input bg-background px-3 py-2 text-sm" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-1">Current Value</label>
-                  <input type="number" required step="0.01" min="0" value={form.current_value} onChange={e => setForm({...form, current_value: e.target.value})} className="w-full rounded border border-input bg-background px-3 py-2 text-sm" />
+                  <input type="number" required step="0.01" min="0" value={form.current_value} onChange={e => setForm({...form, current_value: e.target.value})} className="w-full rounded-none border border-input bg-background px-3 py-2 text-sm" />
                 </div>
               </div>
               <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
                 <div className="lg:col-span-1">
                   <label className="block text-sm font-medium mb-1">Purchase Date</label>
-                  <input type="date" required value={form.purchase_date} onChange={e => setForm({...form, purchase_date: e.target.value})} className="w-full rounded border border-input bg-background px-3 py-2 text-sm" />
+                  <input type="date" required value={form.purchase_date} onChange={e => setForm({...form, purchase_date: e.target.value})} className="w-full rounded-none border border-input bg-background px-3 py-2 text-sm" />
                 </div>
                 <div className="lg:col-span-4">
                   <label className="block text-sm font-medium mb-1">Description (Optional)</label>
-                  <input type="text" value={form.description} onChange={e => setForm({...form, description: e.target.value})} className="w-full rounded border border-input bg-background px-3 py-2 text-sm" />
+                  <input type="text" value={form.description} onChange={e => setForm({...form, description: e.target.value})} className="w-full rounded-none border border-input bg-background px-3 py-2 text-sm" />
                 </div>
               </div>
               <div className="flex justify-end gap-2 pt-2 border-t border-border mt-4">
                 <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 text-sm text-muted-foreground hover:bg-muted rounded">Cancel</button>
-                <button type="submit" className="px-4 py-2 text-sm bg-primary text-primary-foreground rounded">Save Investment</button>
+                <button type="submit" className="px-4 py-2 text-sm bg-primary text-primary-foreground cursor-pointer rounded">Save Investment</button>
               </div>
             </form>
           )}
@@ -164,14 +164,14 @@ function Investments() {
               const isPositive = gainLoss >= 0;
 
               return (
-                <div key={inv.id} className="bg-card border border-border rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow relative group">
+                <div key={inv.id} className="bg-card border border-border rounded-none p-5  hover: transition-shadow relative group">
                   <div className="absolute top-3 right-3 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <button onClick={() => { setForm({ ...inv, purchase_date: new Date(inv.purchase_date).toISOString().split('T')[0] }); setShowForm(true); }} className="p-1.5 bg-background border border-border rounded text-blue-600 hover:bg-blue-50"><Pencil className="w-3 h-3" /></button>
-                    <button onClick={() => handleDelete(inv.id)} className="p-1.5 bg-background border border-border rounded text-red-600 hover:bg-red-50"><Trash2 className="w-3 h-3" /></button>
+                    <button onClick={() => { setForm({ ...inv, purchase_date: new Date(inv.purchase_date).toISOString().split('T')[0] }); setShowForm(true); }} className="p-1.5 bg-background border border-border rounded-none text-primary hover:bg-muted"><Pencil className="w-3 h-3" /></button>
+                    <button onClick={() => handleDelete(inv.id)} className="p-1.5 bg-background border border-border rounded-none text-negative hover:bg-red-50"><Trash2 className="w-3 h-3" /></button>
                   </div>
                   
                   <div className="flex flex-col gap-1 mb-4 border-b border-border pb-3">
-                    <span className="text-xs font-semibold text-primary bg-primary/10 px-2 py-0.5 rounded w-fit">{inv.type}</span>
+                    <span className="text-xs font-semibold text-primary bg-muted px-2 py-0.5 rounded-none w-fit">{inv.type}</span>
                     <h3 className="font-bold text-lg leading-tight truncate pr-16" title={inv.asset_name}>{inv.asset_name}</h3>
                   </div>
                   
@@ -187,8 +187,8 @@ function Investments() {
                   </div>
 
                   <div className="flex items-center gap-2 mt-4 pt-3 border-t border-border">
-                    {isPositive ? <TrendingUp className="w-4 h-4 text-green-500" /> : <TrendingDown className="w-4 h-4 text-red-500" />}
-                    <span className={`text-sm font-bold ${isPositive ? 'text-green-600' : 'text-red-600'}`}>
+                    {isPositive ? <TrendingUp className="w-4 h-4 text-positive" /> : <TrendingDown className="w-4 h-4 text-negative" />}
+                    <span className={`text-sm font-bold ${isPositive ? 'text-positive' : 'text-negative'}`}>
                       {isPositive ? '+' : '-'}₹{Math.abs(gainLoss).toFixed(2)} ({isPositive ? '+' : ''}{percent.toFixed(2)}%)
                     </span>
                   </div>

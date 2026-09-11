@@ -65,7 +65,7 @@ function ExpenseForm({ expense, onSave, onCancel }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm p-4">
-      <div className="bg-card w-full max-w-md border border-border rounded-lg shadow-lg overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+      <div className="bg-card w-full max-w-md border border-border rounded-none  overflow-hidden animate-in fade-in zoom-in-95 duration-200">
         <div className="flex justify-between items-center p-4 border-b border-border bg-muted/30">
           <h2 className="text-lg font-bold text-foreground">
             {expense ? 'Edit Expense' : 'Add Expense'}
@@ -77,7 +77,7 @@ function ExpenseForm({ expense, onSave, onCancel }) {
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           {error && (
-            <div className="p-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-md">
+            <div className="p-3 text-sm text-negative bg-red-50 border border-red-200 rounded-none">
               {error}
             </div>
           )}
@@ -94,7 +94,7 @@ function ExpenseForm({ expense, onSave, onCancel }) {
                 required
                 value={formData.amount}
                 onChange={handleChange}
-                className="w-full pl-7 rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full pl-7 rounded-none border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                 placeholder="0.00"
               />
             </div>
@@ -107,7 +107,7 @@ function ExpenseForm({ expense, onSave, onCancel }) {
               required
               value={formData.category}
               onChange={handleChange}
-              className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full rounded-none border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
             >
               <option value="" disabled>Select a category</option>
               {categories.map(c => (
@@ -123,7 +123,7 @@ function ExpenseForm({ expense, onSave, onCancel }) {
               name="description"
               value={formData.description}
               onChange={handleChange}
-              className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full rounded-none border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
               placeholder="Optional description"
             />
           </div>
@@ -135,7 +135,7 @@ function ExpenseForm({ expense, onSave, onCancel }) {
               name="date"
               value={formData.date}
               onChange={handleChange}
-              className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full rounded-none border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
 
@@ -164,7 +164,7 @@ function ExpenseForm({ expense, onSave, onCancel }) {
             <button
               type="submit"
               disabled={loading}
-              className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:bg-primary/90 transition-colors disabled:opacity-50"
+              className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground cursor-pointer rounded-none text-sm font-medium hover:bg-muted transition-colors disabled:opacity-50"
             >
               <Save className="w-4 h-4" />
               {loading ? 'Saving...' : 'Save Expense'}

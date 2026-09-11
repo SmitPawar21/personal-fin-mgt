@@ -14,7 +14,7 @@ function ExpenseFilters({ filters, setFilters }) {
   };
 
   return (
-    <div className="bg-card border border-border p-4 rounded-lg flex flex-col md:flex-row gap-4 mb-6 shadow-sm">
+    <div className="bg-card border border-border p-4 rounded-none flex flex-col md:flex-row gap-4 mb-6 ">
       <div className="flex-1">
         <label className="block text-sm font-medium text-muted-foreground mb-1">Search</label>
         <input
@@ -23,7 +23,7 @@ function ExpenseFilters({ filters, setFilters }) {
           value={filters.search || ''}
           onChange={handleChange}
           placeholder="Search descriptions..."
-          className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+          className="w-full rounded-none border border-input bg-background px-3 py-2 text-sm"
         />
       </div>
       <div className="flex-1">
@@ -33,7 +33,7 @@ function ExpenseFilters({ filters, setFilters }) {
           name="month"
           value={filters.month || ''}
           onChange={handleChange}
-          className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+          className="w-full rounded-none border border-input bg-background px-3 py-2 text-sm"
         />
       </div>
       <div className="flex-1">
@@ -42,7 +42,7 @@ function ExpenseFilters({ filters, setFilters }) {
           name="category"
           value={filters.category || ''}
           onChange={handleChange}
-          className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+          className="w-full rounded-none border border-input bg-background px-3 py-2 text-sm"
         >
           <option value="">All Categories</option>
           {categories.map(c => (
@@ -56,7 +56,7 @@ function ExpenseFilters({ filters, setFilters }) {
           name="upi_transaction"
           value={filters.upi_transaction || ''}
           onChange={handleChange}
-          className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+          className="w-full rounded-none border border-input bg-background px-3 py-2 text-sm"
         >
           <option value="">All</option>
           <option value="true">Yes</option>

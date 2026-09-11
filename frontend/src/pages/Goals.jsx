@@ -58,15 +58,15 @@ function Goals() {
         </div>
         <button
           onClick={() => setShowForm(!showForm)}
-          className="flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded font-medium hover:bg-primary/90 text-sm"
+          className="flex items-center gap-2 bg-primary text-primary-foreground cursor-pointer px-4 py-2 rounded-none font-medium hover:bg-muted text-sm"
         >
           <Plus className="w-4 h-4" /> Add Goal
         </button>
       </div>
 
-      <div className="bg-primary/5 border border-primary/20 p-4 rounded-lg flex items-center justify-between shadow-sm">
+      <div className="bg-muted border border-primary p-4 rounded-none flex items-center justify-between ">
         <div className="flex items-center gap-3">
-          <div className="bg-primary/20 p-2 rounded-full"><Target className="w-6 h-6 text-primary" /></div>
+          <div className="bg-muted p-2 rounded-none"><Target className="w-6 h-6 text-primary" /></div>
           <div>
             <p className="text-sm font-medium text-muted-foreground">Current Overall Savings</p>
             <p className="text-xl font-bold text-foreground">₹{Number(overallSavings).toFixed(2)}</p>
@@ -78,13 +78,13 @@ function Goals() {
       </div>
 
       {showForm && (
-        <form onSubmit={handleSave} className="bg-card p-6 rounded-lg border border-border shadow-sm flex flex-col md:flex-row items-end gap-4 animate-in slide-in-from-top-2">
+        <form onSubmit={handleSave} className="bg-card p-6 rounded-none border border-border  flex flex-col md:flex-row items-end gap-4 animate-in slide-in-from-top-2">
           <div className="flex-1 w-full">
             <label className="block text-sm font-medium mb-1">Goal Name</label>
             <input 
               type="text" required placeholder="e.g. New Car"
               value={form.name} onChange={e => setForm({...form, name: e.target.value})}
-              className="w-full rounded border border-input bg-background px-3 py-2 text-sm"
+              className="w-full rounded-none border border-input bg-background px-3 py-2 text-sm"
             />
           </div>
           <div className="flex-1 w-full">
@@ -92,7 +92,7 @@ function Goals() {
             <input 
               type="number" required min="1" step="0.01" placeholder="Amount"
               value={form.target_amount} onChange={e => setForm({...form, target_amount: e.target.value})}
-              className="w-full rounded border border-input bg-background px-3 py-2 text-sm"
+              className="w-full rounded-none border border-input bg-background px-3 py-2 text-sm"
             />
           </div>
           <div className="flex-1 w-full">
@@ -100,12 +100,12 @@ function Goals() {
             <input 
               type="date" required
               value={form.deadline} onChange={e => setForm({...form, deadline: e.target.value})}
-              className="w-full rounded border border-input bg-background px-3 py-2 text-sm"
+              className="w-full rounded-none border border-input bg-background px-3 py-2 text-sm"
             />
           </div>
           <div className="flex gap-2 w-full md:w-auto">
             <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 text-sm text-muted-foreground hover:bg-muted rounded">Cancel</button>
-            <button type="submit" className="px-4 py-2 text-sm bg-primary text-primary-foreground rounded">Save</button>
+            <button type="submit" className="px-4 py-2 text-sm bg-primary text-primary-foreground cursor-pointer rounded">Save</button>
           </div>
         </form>
       )}
@@ -113,7 +113,7 @@ function Goals() {
       {loading ? (
         <div className="text-center py-10 animate-pulse text-muted-foreground">Loading goals...</div>
       ) : goals.length === 0 ? (
-        <div className="text-center py-12 bg-card rounded border border-border">
+        <div className="text-center py-12 bg-card rounded-none border border-border">
           <p className="text-muted-foreground">No goals set yet. Add one to start tracking!</p>
         </div>
       ) : (
@@ -127,9 +127,9 @@ function Goals() {
             const isAchieved = progress >= target;
 
             return (
-              <div key={goal.id} className={`bg-card p-5 rounded-lg border shadow-sm flex flex-col relative ${isAchieved ? 'border-green-500/50 bg-green-50/5' : 'border-border'}`}>
+              <div key={goal.id} className={`bg-card p-5 rounded-none border  flex flex-col relative ${isAchieved ? 'border-positive bg-green-50/5' : 'border-border'}`}>
                 <div className="absolute top-4 right-4">
-                  <button onClick={() => handleDelete(goal.id)} className="text-muted-foreground hover:text-red-500 p-1">
+                  <button onClick={() => handleDelete(goal.id)} className="text-muted-foreground hover:text-negative p-1">
                     <Trash2 className="w-4 h-4" />
                   </button>
                 </div>
@@ -138,23 +138,23 @@ function Goals() {
                 <p className="text-xs text-muted-foreground mb-4">Target: {new Date(goal.deadline).toLocaleDateString()}</p>
                 
                 <div className="flex justify-between items-end mb-2">
-                  <p className={`text-2xl font-bold ${isAchieved ? 'text-green-600' : 'text-primary'}`}>
+                  <p className={`text-2xl font-bold ${isAchieved ? 'text-positive' : 'text-primary'}`}>
                     ₹{progress.toFixed(2)}
                   </p>
                   <p className="text-sm text-muted-foreground">of ₹{target.toFixed(2)}</p>
                 </div>
 
-                <div className="w-full h-3 bg-muted rounded-full overflow-hidden mb-2">
+                <div className="w-full h-3 bg-muted rounded-none overflow-hidden mb-2">
                   <div 
-                    className={`h-full transition-all duration-500 ${isAchieved ? 'bg-green-500' : 'bg-primary'}`}
+                    className={`h-full transition-all duration-500 ${isAchieved ? 'bg-positive' : 'bg-primary'}`}
                     style={{ width: `${cappedPercent}%` }}
                   />
                 </div>
                 
                 <div className="flex justify-between mt-auto text-xs font-medium">
-                  <span className={isAchieved ? 'text-green-600' : 'text-foreground'}>{cappedPercent.toFixed(1)}%</span>
+                  <span className={isAchieved ? 'text-positive' : 'text-foreground'}>{cappedPercent.toFixed(1)}%</span>
                   {isAchieved ? (
-                    <span className="text-green-600">Goal Achieved! 🎉</span>
+                    <span className="text-positive">Goal Achieved! 🎉</span>
                   ) : (
                     <span className="text-muted-foreground">₹{remaining.toFixed(2)} left</span>
                   )}

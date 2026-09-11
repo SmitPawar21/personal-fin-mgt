@@ -114,7 +114,7 @@ function Expenses() {
         <div className="flex gap-3">
           <button
             onClick={downloadCSV}
-            className="flex items-center gap-2 px-4 py-2 bg-secondary text-secondary-foreground rounded-md text-sm font-medium hover:bg-secondary/80 transition-colors shadow-sm border border-border"
+            className="flex items-center gap-2 px-4 py-2 bg-secondary text-secondary-foreground cursor-pointer rounded-none text-sm font-medium hover:bg-secondary/80 transition-colors  border border-border"
           >
             <Download className="w-4 h-4" />
             Export CSV
@@ -124,7 +124,7 @@ function Expenses() {
               setEditingExpense(null);
               setIsFormOpen(true);
             }}
-            className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:bg-primary/90 transition-colors shadow-sm"
+            className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground cursor-pointer rounded-none text-sm font-medium hover:bg-muted transition-colors "
           >
             <Plus className="w-4 h-4" />
             Add Expense
