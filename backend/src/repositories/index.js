@@ -1,31 +1,46 @@
 const BaseRepository = require('./baseRepository');
+const {
+  User,
+  Expense,
+  Income,
+  Savings,
+  SavingsGoal,
+  Budget,
+  Investment,
+  Category,
+  AuditLog,
+  System
+} = require('../models');
 
 class UserRepository extends BaseRepository {
-  constructor() { super('Users'); }
+  constructor() { super(User, 'User'); }
 }
 class ExpenseRepository extends BaseRepository {
-  constructor() { super('Expenses'); }
+  constructor() { super(Expense, 'Expense'); }
 }
 class IncomeRepository extends BaseRepository {
-  constructor() { super('Income'); }
+  constructor() { super(Income, 'Income'); }
 }
 class SavingsRepository extends BaseRepository {
-  constructor() { super('Savings'); }
+  constructor() { super(Savings, 'Savings'); }
 }
 class SavingsGoalRepository extends BaseRepository {
-  constructor() { super('SavingsGoals'); }
+  constructor() { super(SavingsGoal, 'SavingsGoal'); }
 }
 class BudgetRepository extends BaseRepository {
-  constructor() { super('Budgets'); }
+  constructor() { super(Budget, 'Budget'); }
 }
 class InvestmentRepository extends BaseRepository {
-  constructor() { super('Investments'); }
+  constructor() { super(Investment, 'Investment'); }
 }
 class CategoryRepository extends BaseRepository {
-  constructor() { super('Categories'); }
+  constructor() { super(Category, 'Category'); }
 }
 class AuditLogRepository extends BaseRepository {
-  constructor() { super('AuditLog'); }
+  constructor() { super(AuditLog, 'AuditLog'); }
+}
+class SystemRepository extends BaseRepository {
+  constructor() { super(System, 'System'); }
 }
 
 module.exports = {
@@ -37,5 +52,6 @@ module.exports = {
   BudgetRepository: new BudgetRepository(),
   InvestmentRepository: new InvestmentRepository(),
   CategoryRepository: new CategoryRepository(),
-  AuditLogRepository: new AuditLogRepository()
+  AuditLogRepository: new AuditLogRepository(),
+  SystemRepository: new SystemRepository(),
 };

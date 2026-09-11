@@ -5,7 +5,8 @@
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "nodemon src/server.js"
+    "dev": "nodemon src/server.js",
+    "migrate": "node src/scripts/migrateFromExcel.js"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
@@ -14,6 +15,7 @@
     "exceljs": "^4.4.0",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.10.0",
     "winston": "^3.13.0"
   },
   "devDependencies": {

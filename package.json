@@ -9,7 +9,9 @@
   ],
   "scripts": {
     "dev": "concurrently \"npm run dev -w backend\" \"npm run dev -w frontend\"",
-    "start": "concurrently \"npm start -w backend\" \"npm start -w frontend\"",
+    "build": "npm run build -w frontend",
+    "start": "npm run build && node backend/src/server.js",
+    "start:prod": "node backend/src/server.js",
     "install:all": "npm install"
   },
   "devDependencies": {

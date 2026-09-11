@@ -1,14 +1,14 @@
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
-const dbService = require('../services/dbService');
+const { connectDB } = require('../config/db');
 const { UserRepository } = require('../repositories');
 
 const seedUser = async () => {
   const username = process.argv[2] || 'admin';
   const plainPassword = process.argv[3] || 'admin123';
 
-  console.log(`Initializing DB...`);
-  await dbService.initialize();
+  console.log(`Connecting to DB...`);
+  await connectDB();
 
   const existingUsers = await UserRepository.find({ username });
   if (existingUsers.length > 0) {

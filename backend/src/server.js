@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const env = require('./config/env');
 const logger = require('./utils/logger');
 const healthRoutes = require('./routes/healthRoutes');
@@ -41,10 +42,29 @@ app.use('/api/investments', investmentRoutes);
 // Global Error Handler
 app.use(errorHandler);
 
+// --- Serve Frontend in Production ---
+const frontendDistPath = path.join(__dirname, '../../frontend/dist');
+app.use(express.static(frontendDistPath));
+
+// Catch-all: send index.html for any non-API route (SPA client-side routing)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(frontendDistPath, 'index.html'));
+});
+
 const startServer = async () => {
   try {
-    const dbService = require('./services/dbService');
-    await dbService.initialize();
+    const { connectDB } = require('./config/db');
+    const { Category } = require('./models');
+    const migrate = require('./scripts/migrateFromExcel');
+
+    await connectDB();
+    
+    // Auto-sync from Excel if database has no categories yet
+    const categoryCount = await Category.countDocuments();
+    if (categoryCount === 0) {
+      logger.info('Database is empty on start. Running initial migration from Excel...');
+      await migrate();
+    }
     
     app.listen(env.PORT, () => {
       logger.info(`Server running on port ${env.PORT}`);

@@ -1,21 +1,24 @@
-const dbService = require('../services/dbService');
+const { mongoose } = require('../config/db');
+const migrate = require('../scripts/migrateFromExcel');
 const logger = require('../utils/logger');
 
 const getHealth = async (req, res, next) => {
   try {
-    const dbHealth = await dbService.checkHealth();
-    
-    if (dbHealth.status === 'healthy') {
+    const isConnected = mongoose.connection.readyState === 1;
+
+    if (isConnected) {
       res.status(200).json({
         success: true,
         message: 'Backend is running securely.',
-        database: 'Connected to Excel DB'
+        database: 'Connected to MongoDB',
+        host: mongoose.connection.host,
+        dbName: mongoose.connection.name
       });
     } else {
       res.status(500).json({
         success: false,
-        message: 'Backend is running but DB check failed.',
-        error: dbHealth.reason
+        message: 'Backend is running but MongoDB is not connected.',
+        readyState: mongoose.connection.readyState
       });
     }
   } catch (error) {
@@ -25,8 +28,13 @@ const getHealth = async (req, res, next) => {
 
 const repairDb = async (req, res, next) => {
   try {
-    const result = await dbService.restoreBackup();
-    res.status(200).json(result);
+    logger.info('Repair/Re-sync DB requested: running migration from Excel backup');
+    const stats = await migrate();
+    res.status(200).json({
+      success: true,
+      message: 'Database re-synchronized with Excel data',
+      stats
+    });
   } catch (error) {
     next(error);
   }
