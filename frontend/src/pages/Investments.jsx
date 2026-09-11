@@ -56,7 +56,7 @@ function Investments() {
 
   return (
     <div className="max-w-6xl mx-auto space-y-8">
-      <div className="flex justify-between items-end border-b border-border pb-4">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-end border-b border-border pb-4 gap-4">
         <div>
           <h1 className="text-3xl font-bold text-foreground">Investments</h1>
           <p className="text-muted-foreground mt-1">Track your mutual funds, stocks, and other assets manually.</p>

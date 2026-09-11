@@ -90,7 +90,7 @@ function Budgets() {
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
-      <div className="flex justify-between items-end border-b border-border pb-4">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-end border-b border-border pb-4 gap-4">
         <div>
           <h1 className="text-3xl font-bold text-foreground">Budgets</h1>
           <p className="text-muted-foreground mt-1">Manage your overall and category-wise budgets.</p>

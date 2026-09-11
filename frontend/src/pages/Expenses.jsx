@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plus } from 'lucide-react';
+import { Plus, Download } from 'lucide-react';
 import { getExpenses, createExpense, updateExpense, deleteExpense } from '../lib/expenseService';
 import ExpenseFilters from '../components/expenses/ExpenseFilters';
 import ExpenseList from '../components/expenses/ExpenseList';
@@ -39,7 +39,8 @@ function Expenses() {
 
   useEffect(() => {
     fetchExpenses();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-di
+  // sable-next-line react-hooks/exhaustive-deps
   }, [filters]);
 
   const handleSave = async (expenseData) => {
@@ -70,23 +71,65 @@ function Expenses() {
     setIsFormOpen(true);
   };
 
+  const downloadCSV = () => {
+    if (!expenses || expenses.length === 0) {
+      alert("No expenses to export.");
+      return;
+    }
+
+    const headers = ['Date', 'Description', 'Category', 'Amount', 'UPI Transaction', 'Created By', 'Updated By'];
+    const csvRows = [headers.join(',')];
+
+    for (const exp of expenses) {
+      const row = [
+        new Date(exp.date).toLocaleDateString(),
+        `"${(exp.description || '').replace(/"/g, '""')}"`,
+        `"${exp.category}"`,
+        exp.amount,
+        exp.upi_transaction === 'YES' || exp.upi_transaction === true ? 'YES' : 'NO',
+        `"${exp.created_by || ''}"`,
+        `"${exp.updated_by || ''}"`
+      ];
+      csvRows.push(row.join(','));
+    }
+
+    const csvString = csvRows.join('\n');
+    const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `expenses_${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <div className="flex flex-col gap-6 max-w-6xl mx-auto">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <h1 className="text-3xl font-bold text-foreground">Expenses</h1>
           <p className="text-muted-foreground mt-1">Manage and track your daily expenses.</p>
         </div>
-        <button
-          onClick={() => {
-            setEditingExpense(null);
-            setIsFormOpen(true);
-          }}
-          className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:bg-primary/90 transition-colors shadow-sm"
-        >
-          <Plus className="w-4 h-4" />
-          Add Expense
-        </button>
+        <div className="flex gap-3">
+          <button
+            onClick={downloadCSV}
+            className="flex items-center gap-2 px-4 py-2 bg-secondary text-secondary-foreground rounded-md text-sm font-medium hover:bg-secondary/80 transition-colors shadow-sm border border-border"
+          >
+            <Download className="w-4 h-4" />
+            Export CSV
+          </button>
+          <button
+            onClick={() => {
+              setEditingExpense(null);
+              setIsFormOpen(true);
+            }}
+            className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:bg-primary/90 transition-colors shadow-sm"
+          >
+            <Plus className="w-4 h-4" />
+            Add Expense
+          </button>
+        </div>
       </div>
 
       <ExpenseFilters filters={filters} setFilters={setFilters} />
