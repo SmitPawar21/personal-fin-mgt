@@ -160,16 +160,16 @@ function Budgets() {
                     </h3>
                     <p className="text-sm text-muted-foreground mt-0.5">
                       {over ? (
-                        <span className="text-red-500 font-medium">Over budget by ${Math.abs(remaining).toFixed(2)}</span>
+                        <span className="text-red-500 font-medium">Over budget by ₹{Math.abs(remaining).toFixed(2)}</span>
                       ) : (
-                        <span>${remaining.toFixed(2)} remaining</span>
+                        <span>₹{remaining.toFixed(2)} remaining</span>
                       )}
                     </p>
                   </div>
                   <div className="flex flex-col items-end gap-2">
                     <p className="text-lg font-mono">
-                      <span className={over ? 'text-red-600 font-bold' : 'text-foreground'}>${actual.toFixed(2)}</span>
-                      <span className="text-muted-foreground text-sm"> / ${target.toFixed(2)}</span>
+                      <span className={over ? 'text-red-600 font-bold' : 'text-foreground'}>₹{actual.toFixed(2)}</span>
+                      <span className="text-muted-foreground text-sm"> / ₹{target.toFixed(2)}</span>
                     </p>
                     <button onClick={() => handleDelete(budget.id)} className="text-muted-foreground hover:text-red-500 p-1">
                       <Trash2 className="w-4 h-4" />

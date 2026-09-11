@@ -120,22 +120,22 @@ function Dashboard() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <div className="bg-card p-5 rounded-lg border border-border shadow-sm flex flex-col justify-between">
               <h3 className="text-sm font-medium text-muted-foreground">Total Income</h3>
-              <p className="text-2xl font-bold text-green-600 mt-2">${monthlyIncome.toFixed(2)}</p>
+              <p className="text-2xl font-bold text-green-600 mt-2">₹{monthlyIncome.toFixed(2)}</p>
             </div>
             <div className="bg-card p-5 rounded-lg border border-border shadow-sm flex flex-col justify-between">
               <h3 className="text-sm font-medium text-muted-foreground">Total Expenses</h3>
-              <p className="text-2xl font-bold text-red-600 mt-2">${monthlyExpenses.toFixed(2)}</p>
+              <p className="text-2xl font-bold text-red-600 mt-2">₹{monthlyExpenses.toFixed(2)}</p>
             </div>
             <div className="bg-card p-5 rounded-lg border border-border shadow-sm flex flex-col justify-between">
               <h3 className="text-sm font-medium text-muted-foreground">Monthly Savings</h3>
-              <p className="text-2xl font-bold text-primary mt-2">${Number(analytics?.monthlySavings || 0).toFixed(2)}</p>
+              <p className="text-2xl font-bold text-primary mt-2">₹{Number(analytics?.monthlySavings || 0).toFixed(2)}</p>
             </div>
             <div className={`bg-card p-5 rounded-lg border shadow-sm flex flex-col justify-between ${remainingBudget < 0 ? 'border-red-500 bg-red-50/10' : 'border-border'}`}>
               <h3 className="text-sm font-medium text-muted-foreground flex items-center gap-2">
                 Remaining Budget {overallBudgetAmount === 0 && '(Not Set)'}
               </h3>
               <p className={`text-2xl font-bold mt-2 ${remainingBudget < 0 ? 'text-red-600' : 'text-foreground'}`}>
-                ${remainingBudget.toFixed(2)}
+                ₹{remainingBudget.toFixed(2)}
               </p>
             </div>
           </div>
@@ -148,7 +148,7 @@ function Dashboard() {
                 <div>
                   <div className="flex justify-between text-sm mb-1">
                     <span className="font-medium text-muted-foreground">Income</span>
-                    <span className="font-bold text-green-600">${monthlyIncome.toFixed(2)}</span>
+                    <span className="font-bold text-green-600">₹{monthlyIncome.toFixed(2)}</span>
                   </div>
                   <div className="w-full h-4 bg-muted rounded-full overflow-hidden">
                     <div className="h-full bg-green-500 rounded-full" style={{ width: `${incPercent}%` }}></div>
@@ -157,7 +157,7 @@ function Dashboard() {
                 <div>
                   <div className="flex justify-between text-sm mb-1">
                     <span className="font-medium text-muted-foreground">Expense</span>
-                    <span className="font-bold text-red-600">${monthlyExpenses.toFixed(2)}</span>
+                    <span className="font-bold text-red-600">₹{monthlyExpenses.toFixed(2)}</span>
                   </div>
                   <div className="w-full h-4 bg-muted rounded-full overflow-hidden">
                     <div className="h-full bg-red-500 rounded-full" style={{ width: `${expPercent}%` }}></div>
@@ -177,7 +177,7 @@ function Dashboard() {
                     <div key={c.cat}>
                       <div className="flex justify-between text-sm mb-1">
                         <span className="font-medium truncate pr-4">{c.cat}</span>
-                        <span className="font-bold whitespace-nowrap">${c.amt.toFixed(2)}</span>
+                        <span className="font-bold whitespace-nowrap">₹{c.amt.toFixed(2)}</span>
                       </div>
                       <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
                         <div className="h-full bg-primary/70 rounded-full" style={{ width: `${(c.amt / maxCatAmt) * 100}%` }}></div>
@@ -210,7 +210,7 @@ function Dashboard() {
                         <div className="flex justify-between text-sm mb-1">
                           <span className="font-medium truncate pr-2">{b.category}</span>
                           <span className={`font-bold text-xs ${isOver ? 'text-red-600' : 'text-muted-foreground'}`}>
-                            ${actual.toFixed(0)} / ${target.toFixed(0)}
+                            ₹{actual.toFixed(0)} / ₹{target.toFixed(0)}
                           </span>
                         </div>
                         <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
@@ -255,7 +255,7 @@ function Dashboard() {
               <div className="bg-card p-5 rounded-lg border border-border shadow-sm flex items-center justify-between">
                 <div>
                   <h3 className="text-sm font-medium text-muted-foreground mb-1">Monthly UPI Spend</h3>
-                  <p className="text-2xl font-bold text-foreground">${Number(analytics?.monthlyUpiExpenses || 0).toFixed(2)}</p>
+                  <p className="text-2xl font-bold text-foreground">₹{Number(analytics?.monthlyUpiExpenses || 0).toFixed(2)}</p>
                 </div>
                 <div className="bg-blue-50 p-3 rounded-full text-blue-600"><SmartphoneNfc className="w-6 h-6" /></div>
               </div>
@@ -264,11 +264,11 @@ function Dashboard() {
                 <div className="flex justify-between items-start mb-2">
                   <h3 className="text-sm font-medium text-muted-foreground flex items-center gap-1"><Landmark className="w-4 h-4"/> Investments</h3>
                 </div>
-                <p className="text-2xl font-bold text-foreground">${investmentsData?.currentValue.toFixed(2)}</p>
+                <p className="text-2xl font-bold text-foreground">₹{investmentsData?.currentValue.toFixed(2)}</p>
                 <div className="flex items-center gap-2 mt-2 text-sm">
                   {investmentsData?.gainLoss >= 0 ? <TrendingUp className="w-4 h-4 text-green-500" /> : <TrendingDown className="w-4 h-4 text-red-500" />}
                   <span className={investmentsData?.gainLoss >= 0 ? 'text-green-600' : 'text-red-600'}>
-                    {investmentsData?.gainLoss >= 0 ? '+' : '-'}${Math.abs(investmentsData?.gainLoss || 0).toFixed(2)} Total Return
+                    {investmentsData?.gainLoss >= 0 ? '+' : '-'}₹{Math.abs(investmentsData?.gainLoss || 0).toFixed(2)} Total Return
                   </span>
                 </div>
               </div>
@@ -301,7 +301,7 @@ function Dashboard() {
                           <span className="bg-primary/10 text-primary px-2 py-0.5 rounded text-xs font-medium">{exp.category}</span>
                         </td>
                         <td className="px-4 py-3 truncate max-w-[200px]">{exp.description || '-'}</td>
-                        <td className="px-4 py-3 text-right font-bold whitespace-nowrap">${Number(exp.amount).toFixed(2)}</td>
+                        <td className="px-4 py-3 text-right font-bold whitespace-nowrap">₹{Number(exp.amount).toFixed(2)}</td>
                       </tr>
                     ))}
                   </tbody>

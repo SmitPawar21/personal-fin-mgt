@@ -99,15 +99,15 @@ function Savings() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-card p-6 rounded-lg border border-border shadow-sm">
               <h3 className="text-sm font-medium text-muted-foreground">Monthly Income ({currentMonth})</h3>
-              <p className="text-2xl font-bold text-green-600 mt-2">${Number(summary?.monthlyIncome || 0).toFixed(2)}</p>
+              <p className="text-2xl font-bold text-green-600 mt-2">₹{Number(summary?.monthlyIncome || 0).toFixed(2)}</p>
             </div>
             <div className="bg-card p-6 rounded-lg border border-border shadow-sm">
               <h3 className="text-sm font-medium text-muted-foreground">Monthly Expenses ({currentMonth})</h3>
-              <p className="text-2xl font-bold text-red-600 mt-2">${Number(summary?.monthlyExpenses || 0).toFixed(2)}</p>
+              <p className="text-2xl font-bold text-red-600 mt-2">₹{Number(summary?.monthlyExpenses || 0).toFixed(2)}</p>
             </div>
             <div className="bg-card p-6 rounded-lg border border-border shadow-sm bg-primary/5 border-primary/20">
               <h3 className="text-sm font-medium text-primary">Monthly Savings ({currentMonth})</h3>
-              <p className="text-2xl font-bold text-primary mt-2">${Number(summary?.monthlySavings || 0).toFixed(2)}</p>
+              <p className="text-2xl font-bold text-primary mt-2">₹{Number(summary?.monthlySavings || 0).toFixed(2)}</p>
             </div>
           </div>
 
@@ -146,7 +146,7 @@ function Savings() {
                     {incomes.map(inc => (
                       <li key={inc.id} className="p-4 flex justify-between items-center hover:bg-muted/10">
                         <div>
-                          <p className="font-semibold text-sm">${Number(inc.amount).toFixed(2)}</p>
+                          <p className="font-semibold text-sm">₹{Number(inc.amount).toFixed(2)}</p>
                           <p className="text-xs text-muted-foreground">{new Date(inc.date).toLocaleDateString()} {inc.description && `- ${inc.description}`}</p>
                         </div>
                         <button onClick={() => handleDeleteIncome(inc.id)} className="text-red-500 hover:bg-red-50 p-1.5 rounded"><Trash2 className="w-4 h-4" /></button>
@@ -200,7 +200,7 @@ function Savings() {
                       </div>
                       <h3 className="font-bold truncate" title={card.source}>{card.source}</h3>
                     </div>
-                    <p className="text-2xl font-bold mb-1">${Number(card.amount).toFixed(2)}</p>
+                    <p className="text-2xl font-bold mb-1">₹{Number(card.amount).toFixed(2)}</p>
                     {card.description && <p className="text-xs text-muted-foreground line-clamp-2">{card.description}</p>}
                     <p className="text-[10px] text-muted-foreground mt-3 pt-3 border-t border-border">Updated: {new Date(card.updated_at).toLocaleDateString()}</p>
                   </div>

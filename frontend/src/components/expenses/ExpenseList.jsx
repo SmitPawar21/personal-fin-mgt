@@ -40,7 +40,7 @@ function ExpenseList({ expenses, onEdit, onDelete }) {
                   </span>
                 </td>
                 <td className="px-6 py-4 text-right font-bold text-red-600 dark:text-red-400">
-                  ${Number(expense.amount).toFixed(2)}
+                  ₹{Number(expense.amount).toFixed(2)}
                 </td>
                 <td className="px-6 py-4 text-center">
                   {expense.upi_transaction === 'YES' || expense.upi_transaction === true ? (

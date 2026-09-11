@@ -69,7 +69,7 @@ function Goals() {
           <div className="bg-primary/20 p-2 rounded-full"><Target className="w-6 h-6 text-primary" /></div>
           <div>
             <p className="text-sm font-medium text-muted-foreground">Current Overall Savings</p>
-            <p className="text-xl font-bold text-foreground">${Number(overallSavings).toFixed(2)}</p>
+            <p className="text-xl font-bold text-foreground">₹{Number(overallSavings).toFixed(2)}</p>
           </div>
         </div>
         <div className="text-right text-sm text-muted-foreground max-w-xs">
@@ -138,10 +138,10 @@ function Goals() {
                 <p className="text-xs text-muted-foreground mb-4">Target: {new Date(goal.deadline).toLocaleDateString()}</p>
                 
                 <div className="flex justify-between items-end mb-2">
-                  <p className="text-2xl font-bold ${isAchieved ? 'text-green-600' : 'text-primary'}">
-                    ${progress.toFixed(2)}
+                  <p className={`text-2xl font-bold ${isAchieved ? 'text-green-600' : 'text-primary'}`}>
+                    ₹{progress.toFixed(2)}
                   </p>
-                  <p className="text-sm text-muted-foreground">of ${target.toFixed(2)}</p>
+                  <p className="text-sm text-muted-foreground">of ₹{target.toFixed(2)}</p>
                 </div>
 
                 <div className="w-full h-3 bg-muted rounded-full overflow-hidden mb-2">
@@ -156,7 +156,7 @@ function Goals() {
                   {isAchieved ? (
                     <span className="text-green-600">Goal Achieved! 🎉</span>
                   ) : (
-                    <span className="text-muted-foreground">${remaining.toFixed(2)} left</span>
+                    <span className="text-muted-foreground">₹{remaining.toFixed(2)} left</span>
                   )}
                 </div>
               </div>

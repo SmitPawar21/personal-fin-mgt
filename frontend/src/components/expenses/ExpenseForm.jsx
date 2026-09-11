@@ -85,7 +85,7 @@ function ExpenseForm({ expense, onSave, onCancel }) {
           <div>
             <label className="block text-sm font-medium text-foreground mb-1">Amount *</label>
             <div className="relative">
-              <span className="absolute left-3 top-2.5 text-muted-foreground">$</span>
+              <span className="absolute left-3 top-2.5 text-muted-foreground">₹</span>
               <input
                 type="number"
                 name="amount"

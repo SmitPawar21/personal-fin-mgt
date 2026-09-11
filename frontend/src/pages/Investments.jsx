@@ -78,7 +78,7 @@ function Investments() {
             <div className="bg-card p-6 rounded-lg border border-border shadow-sm flex items-center justify-between">
               <div>
                 <h3 className="text-sm font-medium text-muted-foreground">Total Invested</h3>
-                <p className="text-2xl font-bold text-foreground mt-1">${totalInvested.toFixed(2)}</p>
+                <p className="text-2xl font-bold text-foreground mt-1">₹{totalInvested.toFixed(2)}</p>
               </div>
               <div className="bg-muted p-3 rounded-full"><Landmark className="w-6 h-6 text-muted-foreground" /></div>
             </div>
@@ -86,7 +86,7 @@ function Investments() {
             <div className="bg-card p-6 rounded-lg border border-border shadow-sm flex items-center justify-between">
               <div>
                 <h3 className="text-sm font-medium text-muted-foreground">Current Total Value</h3>
-                <p className="text-2xl font-bold text-foreground mt-1">${currentTotalValue.toFixed(2)}</p>
+                <p className="text-2xl font-bold text-foreground mt-1">₹{currentTotalValue.toFixed(2)}</p>
               </div>
             </div>
 
@@ -95,7 +95,7 @@ function Investments() {
                 <h3 className="text-sm font-medium text-muted-foreground">Overall Gain/Loss</h3>
                 <div className="flex items-center gap-2 mt-1">
                   <p className={`text-2xl font-bold ${totalGainLoss >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                    {totalGainLoss >= 0 ? '+' : '-'}${Math.abs(totalGainLoss).toFixed(2)}
+                    {totalGainLoss >= 0 ? '+' : '-'}₹{Math.abs(totalGainLoss).toFixed(2)}
                   </p>
                   <span className={`text-sm font-medium px-2 py-0.5 rounded ${totalGainLoss >= 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
                     {totalGainLoss >= 0 ? '+' : ''}{totalGainLossPercent.toFixed(2)}%
@@ -178,18 +178,18 @@ function Investments() {
                   <div className="flex justify-between items-end mb-2">
                     <div>
                       <p className="text-xs text-muted-foreground">Current Value</p>
-                      <p className="font-bold text-xl">${current.toFixed(2)}</p>
+                      <p className="font-bold text-xl">₹{current.toFixed(2)}</p>
                     </div>
                     <div className="text-right">
                       <p className="text-xs text-muted-foreground">Invested</p>
-                      <p className="font-medium text-sm">${invested.toFixed(2)}</p>
+                      <p className="font-medium text-sm">₹{invested.toFixed(2)}</p>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-2 mt-4 pt-3 border-t border-border">
                     {isPositive ? <TrendingUp className="w-4 h-4 text-green-500" /> : <TrendingDown className="w-4 h-4 text-red-500" />}
                     <span className={`text-sm font-bold ${isPositive ? 'text-green-600' : 'text-red-600'}`}>
-                      {isPositive ? '+' : '-'}${Math.abs(gainLoss).toFixed(2)} ({isPositive ? '+' : ''}{percent.toFixed(2)}%)
+                      {isPositive ? '+' : '-'}₹{Math.abs(gainLoss).toFixed(2)} ({isPositive ? '+' : ''}{percent.toFixed(2)}%)
                     </span>
                   </div>
                 </div>
