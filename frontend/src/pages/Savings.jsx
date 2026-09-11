@@ -8,7 +8,6 @@ function Savings() {
   const [savingsCards, setSavingsCards] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Forms State
   const [showIncomeForm, setShowIncomeForm] = useState(false);
   const [incomeForm, setIncomeForm] = useState({ amount: '', description: '', date: new Date().toISOString().split('T')[0] });
 
@@ -40,7 +39,6 @@ function Savings() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Handlers for Income
   const handleIncomeSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -60,7 +58,6 @@ function Savings() {
     }
   };
 
-  // Handlers for Savings
   const handleSavingSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -85,10 +82,10 @@ function Savings() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto space-y-8">
+    <div className="max-w-6xl mx-auto space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-foreground">Savings & Income</h1>
-        <p className="text-muted-foreground mt-1">Track your monthly income and manage savings accounts.</p>
+        <h1 className="text-2xl font-bold text-foreground">Savings & Income</h1>
+        <p className="text-muted-foreground text-sm mt-1">Track your monthly income and manage savings accounts.</p>
       </div>
 
       {loading ? (
@@ -96,44 +93,44 @@ function Savings() {
       ) : (
         <>
           {/* Analytics Summary */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-card p-6 rounded-none border border-border ">
-              <h3 className="text-sm font-medium text-muted-foreground">Monthly Income ({currentMonth})</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="bg-card p-5 rounded border border-border">
+              <h3 className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Monthly Income ({currentMonth})</h3>
               <p className="text-2xl font-bold text-positive mt-2">₹{Number(summary?.monthlyIncome || 0).toFixed(2)}</p>
             </div>
-            <div className="bg-card p-6 rounded-none border border-border ">
-              <h3 className="text-sm font-medium text-muted-foreground">Monthly Expenses ({currentMonth})</h3>
+            <div className="bg-card p-5 rounded border border-border">
+              <h3 className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Monthly Expenses ({currentMonth})</h3>
               <p className="text-2xl font-bold text-negative mt-2">₹{Number(summary?.monthlyExpenses || 0).toFixed(2)}</p>
             </div>
-            <div className="bg-card p-6 rounded-none border border-border  bg-muted border-primary">
-              <h3 className="text-sm font-medium text-primary">Monthly Savings ({currentMonth})</h3>
-              <p className="text-2xl font-bold text-primary mt-2">₹{Number(summary?.monthlySavings || 0).toFixed(2)}</p>
+            <div className="bg-card p-5 rounded border border-positive">
+              <h3 className="text-xs font-medium text-positive uppercase tracking-wide">Monthly Savings ({currentMonth})</h3>
+              <p className="text-2xl font-bold text-positive mt-2">₹{Number(summary?.monthlySavings || 0).toFixed(2)}</p>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Income Section */}
-            <div className="bg-card rounded-none border border-border  overflow-hidden flex flex-col">
-              <div className="p-4 border-b border-border flex justify-between items-center bg-muted/20">
-                <h2 className="text-lg font-bold">Income Sources</h2>
+            <div className="bg-card rounded border border-border overflow-hidden flex flex-col">
+              <div className="px-5 py-3 border-b border-border flex justify-between items-center">
+                <h2 className="text-sm font-bold text-foreground">Income Sources</h2>
                 <button 
                   onClick={() => setShowIncomeForm(!showIncomeForm)}
-                  className="flex items-center gap-1 text-sm bg-muted text-primary px-3 py-1.5 rounded-none hover:bg-muted transition-colors font-medium"
+                  className="flex items-center gap-1 text-xs bg-muted text-muted-foreground px-2.5 py-1.5 rounded hover:bg-border transition-colors font-medium cursor-pointer"
                 >
-                  <Plus className="w-4 h-4" /> Add Income
+                  <Plus className="w-3.5 h-3.5" /> Add Income
                 </button>
               </div>
 
               {showIncomeForm && (
-                <form onSubmit={handleIncomeSubmit} className="p-4 bg-muted/10 border-b border-border space-y-3">
+                <form onSubmit={handleIncomeSubmit} className="p-4 border-b border-border space-y-3">
                   <div className="flex gap-3">
-                    <input type="number" required placeholder="Amount" step="0.01" min="0.01" value={incomeForm.amount} onChange={e => setIncomeForm({...incomeForm, amount: e.target.value})} className="flex-1 rounded-none border-input bg-background px-3 py-1.5 text-sm" />
-                    <input type="date" required value={incomeForm.date} onChange={e => setIncomeForm({...incomeForm, date: e.target.value})} className="rounded border-input bg-background px-3 py-1.5 text-sm" />
+                    <input type="number" required placeholder="Amount" step="0.01" min="0.01" value={incomeForm.amount} onChange={e => setIncomeForm({...incomeForm, amount: e.target.value})} className="flex-1 rounded border border-input bg-background px-3 py-1.5 text-sm text-foreground" />
+                    <input type="date" required value={incomeForm.date} onChange={e => setIncomeForm({...incomeForm, date: e.target.value})} className="rounded border border-input bg-background px-3 py-1.5 text-sm text-foreground" />
                   </div>
-                  <input type="text" placeholder="Description (Optional)" value={incomeForm.description} onChange={e => setIncomeForm({...incomeForm, description: e.target.value})} className="w-full rounded-none border-input bg-background px-3 py-1.5 text-sm" />
+                  <input type="text" placeholder="Description (Optional)" value={incomeForm.description} onChange={e => setIncomeForm({...incomeForm, description: e.target.value})} className="w-full rounded border border-input bg-background px-3 py-1.5 text-sm text-foreground" />
                   <div className="flex justify-end gap-2">
-                    <button type="button" onClick={() => setShowIncomeForm(false)} className="text-sm px-3 py-1.5 text-muted-foreground hover:text-foreground">Cancel</button>
-                    <button type="submit" className="text-sm bg-primary text-primary-foreground cursor-pointer px-3 py-1.5 rounded">Save</button>
+                    <button type="button" onClick={() => setShowIncomeForm(false)} className="text-sm px-3 py-1.5 text-muted-foreground hover:text-foreground cursor-pointer">Cancel</button>
+                    <button type="submit" className="text-sm bg-primary text-primary-foreground px-3 py-1.5 rounded cursor-pointer hover:bg-primary/80">Save</button>
                   </div>
                 </form>
               )}
@@ -144,12 +141,12 @@ function Savings() {
                 ) : (
                   <ul className="divide-y divide-border">
                     {incomes.map(inc => (
-                      <li key={inc.id} className="p-4 flex justify-between items-center hover:bg-muted/10">
+                      <li key={inc.id} className="px-5 py-3 flex justify-between items-center hover:bg-muted/30 transition-colors">
                         <div>
-                          <p className="font-semibold text-sm">₹{Number(inc.amount).toFixed(2)}</p>
+                          <p className="font-semibold text-sm text-foreground">₹{Number(inc.amount).toFixed(2)}</p>
                           <p className="text-xs text-muted-foreground">{new Date(inc.date).toLocaleDateString()} {inc.description && `- ${inc.description}`}</p>
                         </div>
-                        <button onClick={() => handleDeleteIncome(inc.id)} className="text-negative hover:bg-red-50 p-1.5 rounded"><Trash2 className="w-4 h-4" /></button>
+                        <button onClick={() => handleDeleteIncome(inc.id)} className="text-muted-foreground hover:text-negative p-1.5 rounded cursor-pointer"><Trash2 className="w-4 h-4" /></button>
                       </li>
                     ))}
                   </ul>
@@ -160,26 +157,26 @@ function Savings() {
             {/* Savings Cards Section */}
             <div className="flex flex-col gap-4">
               <div className="flex justify-between items-center">
-                <h2 className="text-lg font-bold text-foreground">Manual Savings Cards</h2>
+                <h2 className="text-sm font-bold text-foreground">Manual Savings Cards</h2>
                 <button 
                   onClick={() => { setSavingForm({id: null, source: '', amount: '', description: ''}); setShowSavingForm(true); }}
-                  className="flex items-center gap-1 text-sm bg-primary text-primary-foreground cursor-pointer px-3 py-1.5 rounded-none hover:bg-muted transition-colors font-medium"
+                  className="flex items-center gap-1 text-xs bg-primary text-primary-foreground px-2.5 py-1.5 rounded hover:bg-primary/80 transition-colors font-medium cursor-pointer"
                 >
-                  <Plus className="w-4 h-4" /> Create Card
+                  <Plus className="w-3.5 h-3.5" /> Create Card
                 </button>
               </div>
 
               {showSavingForm && (
-                <form onSubmit={handleSavingSubmit} className="bg-card p-4 rounded-none border border-border  space-y-3">
-                  <h3 className="font-bold text-sm mb-2">{savingForm.id ? 'Edit Savings Card' : 'New Savings Card'}</h3>
+                <form onSubmit={handleSavingSubmit} className="bg-card p-4 rounded border border-border space-y-3">
+                  <h3 className="font-bold text-sm text-foreground mb-2">{savingForm.id ? 'Edit Savings Card' : 'New Savings Card'}</h3>
                   <div className="flex gap-3">
-                    <input type="text" required placeholder="Name/Type (e.g. Chase)" value={savingForm.source} onChange={e => setSavingForm({...savingForm, source: e.target.value})} className="flex-1 rounded-none border-input bg-background px-3 py-1.5 text-sm" />
-                    <input type="number" required placeholder="Amount" step="0.01" min="0" value={savingForm.amount} onChange={e => setSavingForm({...savingForm, amount: e.target.value})} className="w-1/3 rounded-none border-input bg-background px-3 py-1.5 text-sm" />
+                    <input type="text" required placeholder="Name/Type (e.g. Chase)" value={savingForm.source} onChange={e => setSavingForm({...savingForm, source: e.target.value})} className="flex-1 rounded border border-input bg-background px-3 py-1.5 text-sm text-foreground" />
+                    <input type="number" required placeholder="Amount" step="0.01" min="0" value={savingForm.amount} onChange={e => setSavingForm({...savingForm, amount: e.target.value})} className="w-1/3 rounded border border-input bg-background px-3 py-1.5 text-sm text-foreground" />
                   </div>
-                  <input type="text" placeholder="Description (Optional)" value={savingForm.description} onChange={e => setSavingForm({...savingForm, description: e.target.value})} className="w-full rounded-none border-input bg-background px-3 py-1.5 text-sm" />
+                  <input type="text" placeholder="Description (Optional)" value={savingForm.description} onChange={e => setSavingForm({...savingForm, description: e.target.value})} className="w-full rounded border border-input bg-background px-3 py-1.5 text-sm text-foreground" />
                   <div className="flex justify-end gap-2 mt-2">
-                    <button type="button" onClick={() => setShowSavingForm(false)} className="text-sm px-3 py-1.5 text-muted-foreground hover:text-foreground">Cancel</button>
-                    <button type="submit" className="text-sm bg-primary text-primary-foreground cursor-pointer px-3 py-1.5 rounded">Save Card</button>
+                    <button type="button" onClick={() => setShowSavingForm(false)} className="text-sm px-3 py-1.5 text-muted-foreground hover:text-foreground cursor-pointer">Cancel</button>
+                    <button type="submit" className="text-sm bg-primary text-primary-foreground px-3 py-1.5 rounded cursor-pointer hover:bg-primary/80">Save Card</button>
                   </div>
                 </form>
               )}
@@ -189,18 +186,18 @@ function Savings() {
                   <p className="text-sm text-muted-foreground col-span-2">No savings cards created yet.</p>
                 )}
                 {savingsCards.map(card => (
-                  <div key={card.id} className="bg-card border border-border rounded-none p-5  hover: transition-shadow relative group">
+                  <div key={card.id} className="bg-card border border-border rounded p-5 relative group">
                     <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
-                      <button onClick={() => { setSavingForm(card); setShowSavingForm(true); }} className="p-1.5 bg-background border border-border rounded-none text-primary hover:bg-muted"><Pencil className="w-3 h-3" /></button>
-                      <button onClick={() => handleDeleteSaving(card.id)} className="p-1.5 bg-background border border-border rounded-none text-negative hover:bg-red-50"><Trash2 className="w-3 h-3" /></button>
+                      <button onClick={() => { setSavingForm(card); setShowSavingForm(true); }} className="p-1.5 bg-muted border border-border rounded text-muted-foreground hover:text-foreground cursor-pointer"><Pencil className="w-3 h-3" /></button>
+                      <button onClick={() => handleDeleteSaving(card.id)} className="p-1.5 bg-muted border border-border rounded text-muted-foreground hover:text-negative cursor-pointer"><Trash2 className="w-3 h-3" /></button>
                     </div>
                     <div className="flex items-center gap-3 mb-3">
-                      <div className="bg-muted p-2 rounded-none text-primary">
-                        <Wallet className="w-5 h-5" />
+                      <div className="bg-muted p-2 rounded">
+                        <Wallet className="w-4 h-4 text-muted-foreground" />
                       </div>
-                      <h3 className="font-bold truncate" title={card.source}>{card.source}</h3>
+                      <h3 className="font-bold text-sm truncate text-foreground" title={card.source}>{card.source}</h3>
                     </div>
-                    <p className="text-2xl font-bold mb-1">₹{Number(card.amount).toFixed(2)}</p>
+                    <p className="text-2xl font-bold mb-1 text-foreground">₹{Number(card.amount).toFixed(2)}</p>
                     {card.description && <p className="text-xs text-muted-foreground line-clamp-2">{card.description}</p>}
                     <p className="text-[10px] text-muted-foreground mt-3 pt-3 border-t border-border">Updated: {new Date(card.updated_at).toLocaleDateString()}</p>
                   </div>

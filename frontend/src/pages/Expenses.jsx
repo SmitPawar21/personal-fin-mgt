@@ -21,7 +21,6 @@ function Expenses() {
   const fetchExpenses = async () => {
     setLoading(true);
     try {
-      // Build clean params
       const params = {};
       if (filters.search) params.search = filters.search;
       if (filters.month) params.month = filters.month;
@@ -39,8 +38,7 @@ function Expenses() {
 
   useEffect(() => {
     fetchExpenses();
-  // eslint-di
-  // sable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters]);
 
   const handleSave = async (expenseData) => {
@@ -51,14 +49,14 @@ function Expenses() {
     }
     setIsFormOpen(false);
     setEditingExpense(null);
-    fetchExpenses(); // Refresh list
+    fetchExpenses();
   };
 
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this expense?')) {
       try {
         await deleteExpense(id);
-        fetchExpenses(); // Refresh list
+        fetchExpenses();
       } catch (error) {
         console.error('Failed to delete expense', error);
         alert('Failed to delete expense.');
@@ -108,13 +106,13 @@ function Expenses() {
     <div className="flex flex-col gap-6 max-w-6xl mx-auto">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Expenses</h1>
-          <p className="text-muted-foreground mt-1">Manage and track your daily expenses.</p>
+          <h1 className="text-2xl font-bold text-foreground">Expenses</h1>
+          <p className="text-muted-foreground text-sm mt-1">Manage and track your daily expenses.</p>
         </div>
-        <div className="flex gap-3">
+        <div className="flex gap-2">
           <button
             onClick={downloadCSV}
-            className="flex items-center gap-2 px-4 py-2 bg-secondary text-secondary-foreground cursor-pointer rounded-none text-sm font-medium hover:bg-secondary/80 transition-colors  border border-border"
+            className="flex items-center gap-2 px-3 py-2 bg-card text-foreground rounded text-sm font-medium hover:bg-muted transition-colors border border-border cursor-pointer"
           >
             <Download className="w-4 h-4" />
             Export CSV
@@ -124,7 +122,7 @@ function Expenses() {
               setEditingExpense(null);
               setIsFormOpen(true);
             }}
-            className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground cursor-pointer rounded-none text-sm font-medium hover:bg-muted transition-colors "
+            className="flex items-center gap-2 px-3 py-2 bg-primary text-primary-foreground rounded text-sm font-medium hover:bg-primary/80 transition-colors cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             Add Expense

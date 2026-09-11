@@ -1,17 +1,34 @@
 @import "tailwindcss";
 
 @theme {
+  /* Core palette */
+  --color-background: #0A0A0A;
+  --color-foreground: #E5E5E5;
+
+  /* Cards & surfaces */
+  --color-card: #141414;
+  --color-card-foreground: #E5E5E5;
+
+  /* Sidebar */
+  --color-sidebar: #1A1208;
+  --color-sidebar-foreground: #D4C9B5;
+  --color-sidebar-active: #412D15;
+
+  /* Primary (Brown) */
   --color-primary: #412D15;
   --color-primary-foreground: #FFFFFF;
+
+  /* Secondary (Dark Brown) */
   --color-secondary: #1F150C;
-  --color-secondary-foreground: #FFFFFF;
-  --color-background: #E1DCC9;
-  --color-foreground: #000000;
-  --color-card: #FFFFFF;
-  --color-card-foreground: #000000;
-  --color-border: #C8C3B1;
-  --color-muted: #F2EFE5;
-  --color-muted-foreground: #4A4A4A;
+  --color-secondary-foreground: #D4C9B5;
+
+  /* Borders & muted */
+  --color-border: #2A2A2A;
+  --color-input: #2A2A2A;
+  --color-muted: #1E1E1E;
+  --color-muted-foreground: #888888;
+
+  /* Semantic */
   --color-positive: #2A835F;
   --color-negative: #810B38;
 }
@@ -21,5 +38,10 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  }
+
+  /* Ensure form controls inherit dark colors */
+  input, select, textarea {
+    color-scheme: dark;
   }
 }

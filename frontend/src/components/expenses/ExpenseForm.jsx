@@ -40,7 +40,6 @@ function ExpenseForm({ expense, onSave, onCancel }) {
     e.preventDefault();
     setError(null);
 
-    // Basic Validation
     if (!formData.amount || isNaN(Number(formData.amount)) || Number(formData.amount) <= 0) {
       setError('Please enter a valid amount greater than 0.');
       return;
@@ -64,28 +63,28 @@ function ExpenseForm({ expense, onSave, onCancel }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm p-4">
-      <div className="bg-card w-full max-w-md border border-border rounded-none  overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-        <div className="flex justify-between items-center p-4 border-b border-border bg-muted/30">
-          <h2 className="text-lg font-bold text-foreground">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+      <div className="bg-card w-full max-w-md border border-border rounded overflow-hidden">
+        <div className="flex justify-between items-center px-5 py-3 border-b border-border">
+          <h2 className="text-base font-bold text-foreground">
             {expense ? 'Edit Expense' : 'Add Expense'}
           </h2>
-          <button onClick={onCancel} className="text-muted-foreground hover:text-foreground">
+          <button onClick={onCancel} className="text-muted-foreground hover:text-foreground cursor-pointer p-1">
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+        <form onSubmit={handleSubmit} className="p-5 space-y-4">
           {error && (
-            <div className="p-3 text-sm text-negative bg-red-50 border border-red-200 rounded-none">
+            <div className="p-3 text-sm text-negative bg-negative/10 border border-negative/30 rounded">
               {error}
             </div>
           )}
 
           <div>
-            <label className="block text-sm font-medium text-foreground mb-1">Amount *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Amount *</label>
             <div className="relative">
-              <span className="absolute left-3 top-2.5 text-muted-foreground">₹</span>
+              <span className="absolute left-3 top-2.5 text-muted-foreground text-sm">₹</span>
               <input
                 type="number"
                 name="amount"
@@ -94,20 +93,20 @@ function ExpenseForm({ expense, onSave, onCancel }) {
                 required
                 value={formData.amount}
                 onChange={handleChange}
-                className="w-full pl-7 rounded-none border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full pl-7 rounded border border-input bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
                 placeholder="0.00"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-foreground mb-1">Category *</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Category *</label>
             <select
               name="category"
               required
               value={formData.category}
               onChange={handleChange}
-              className="w-full rounded-none border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full rounded border border-input bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
             >
               <option value="" disabled>Select a category</option>
               {categories.map(c => (
@@ -117,25 +116,25 @@ function ExpenseForm({ expense, onSave, onCancel }) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-foreground mb-1">Description</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Description</label>
             <input
               type="text"
               name="description"
               value={formData.description}
               onChange={handleChange}
-              className="w-full rounded-none border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full rounded border border-input bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
               placeholder="Optional description"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-foreground mb-1">Date</label>
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Date</label>
             <input
               type="date"
               name="date"
               value={formData.date}
               onChange={handleChange}
-              className="w-full rounded-none border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full rounded border border-input bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
             />
           </div>
 
@@ -148,7 +147,7 @@ function ExpenseForm({ expense, onSave, onCancel }) {
               onChange={handleChange}
               className="rounded border-input text-primary focus:ring-primary w-4 h-4"
             />
-            <label htmlFor="upi_transaction" className="text-sm font-medium text-foreground cursor-pointer">
+            <label htmlFor="upi_transaction" className="text-sm text-foreground cursor-pointer">
               Mark as UPI Transaction
             </label>
           </div>
@@ -157,14 +156,14 @@ function ExpenseForm({ expense, onSave, onCancel }) {
             <button
               type="button"
               onClick={onCancel}
-              className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground cursor-pointer rounded-none text-sm font-medium hover:bg-muted transition-colors disabled:opacity-50"
+              className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded text-sm font-medium hover:bg-primary/80 transition-colors disabled:opacity-50 cursor-pointer"
             >
               <Save className="w-4 h-4" />
               {loading ? 'Saving...' : 'Save Expense'}

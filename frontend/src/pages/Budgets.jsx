@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getBudgets, saveBudget, deleteBudget } from '../lib/apiService';
 import { getExpenses, getCategories } from '../lib/expenseService';
-import { Plus, Trash2, TrendingUp, AlertTriangle } from 'lucide-react';
+import { Plus, Trash2, AlertTriangle } from 'lucide-react';
 
 function Budgets() {
   const [budgets, setBudgets] = useState([]);
@@ -9,7 +9,7 @@ function Budgets() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const currentMonth = new Date().toISOString().slice(0, 7); // YYYY-MM
+  const currentMonth = new Date().toISOString().slice(0, 7);
   const [selectedMonth, setSelectedMonth] = useState(currentMonth);
 
   const [showForm, setShowForm] = useState(false);
@@ -71,7 +71,6 @@ function Budgets() {
     }
   };
 
-  // Calculate actuals
   const calculateProgress = (budget) => {
     let actual = 0;
     if (budget.category === 'Overall') {
@@ -92,19 +91,19 @@ function Budgets() {
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end border-b border-border pb-4 gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Budgets</h1>
-          <p className="text-muted-foreground mt-1">Manage your overall and category-wise budgets.</p>
+          <h1 className="text-2xl font-bold text-foreground">Budgets</h1>
+          <p className="text-muted-foreground text-sm mt-1">Manage your overall and category-wise budgets.</p>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           <input 
             type="month" 
             value={selectedMonth}
             onChange={(e) => setSelectedMonth(e.target.value)}
-            className="rounded border border-input bg-background px-3 py-1.5 text-sm"
+            className="rounded border border-input bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
           />
           <button
             onClick={() => setShowForm(!showForm)}
-            className="flex items-center gap-2 bg-primary text-primary-foreground cursor-pointer px-4 py-2 rounded-none font-medium hover:bg-muted text-sm"
+            className="flex items-center gap-2 bg-primary text-primary-foreground px-3 py-2 rounded font-medium hover:bg-primary/80 text-sm cursor-pointer transition-colors"
           >
             <Plus className="w-4 h-4" /> Add Budget
           </button>
@@ -112,30 +111,30 @@ function Budgets() {
       </div>
 
       {showForm && (
-        <form onSubmit={handleSave} className="bg-card p-6 rounded-none border border-border  flex items-end gap-4 animate-in slide-in-from-top-2">
-          <div className="flex-1">
-            <label className="block text-sm font-medium mb-1">Category</label>
+        <form onSubmit={handleSave} className="bg-card p-5 rounded border border-border flex flex-col md:flex-row items-end gap-4">
+          <div className="flex-1 w-full">
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Category</label>
             <select 
               required
               value={form.category}
               onChange={e => setForm({...form, category: e.target.value})}
-              className="w-full rounded-none border border-input bg-background px-3 py-2 text-sm"
+              className="w-full rounded border border-input bg-background px-3 py-2 text-sm text-foreground"
             >
               <option value="Overall">Overall Monthly Budget</option>
               {categories.map(c => <option key={c.id} value={c.name}>{c.name}</option>)}
             </select>
           </div>
-          <div className="flex-1">
-            <label className="block text-sm font-medium mb-1">Amount</label>
+          <div className="flex-1 w-full">
+            <label className="block text-xs font-medium text-muted-foreground mb-1">Amount</label>
             <input 
               type="number" required min="1" step="0.01" placeholder="Budget limit"
               value={form.amount} onChange={e => setForm({...form, amount: e.target.value})}
-              className="w-full rounded-none border border-input bg-background px-3 py-2 text-sm"
+              className="w-full rounded border border-input bg-background px-3 py-2 text-sm text-foreground"
             />
           </div>
           <div className="flex gap-2">
-            <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 text-sm text-muted-foreground hover:bg-muted rounded">Cancel</button>
-            <button type="submit" className="px-4 py-2 text-sm bg-primary text-primary-foreground cursor-pointer rounded">Save</button>
+            <button type="button" onClick={() => setShowForm(false)} className="px-3 py-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">Cancel</button>
+            <button type="submit" className="px-3 py-2 text-sm bg-primary text-primary-foreground rounded cursor-pointer hover:bg-primary/80">Save</button>
           </div>
         </form>
       )}
@@ -143,7 +142,7 @@ function Budgets() {
       {loading ? (
         <div className="text-center py-10 animate-pulse text-muted-foreground">Loading budgets...</div>
       ) : budgets.length === 0 ? (
-        <div className="text-center py-12 bg-card rounded-none border border-border">
+        <div className="text-center py-12 bg-card rounded border border-border">
           <p className="text-muted-foreground">No budgets set for {selectedMonth}.</p>
         </div>
       ) : (
@@ -151,10 +150,10 @@ function Budgets() {
           {budgets.sort((a,b) => a.category === 'Overall' ? -1 : 1).map(budget => {
             const { actual, target, percent, over, remaining } = calculateProgress(budget);
             return (
-              <div key={budget.id} className={`bg-card p-5 rounded-none border  ${over ? 'border-negative bg-muted' : 'border-border'}`}>
+              <div key={budget.id} className={`bg-card p-5 rounded border ${over ? 'border-negative' : 'border-border'}`}>
                 <div className="flex justify-between items-start mb-4">
                   <div>
-                    <h3 className="text-lg font-bold flex items-center gap-2">
+                    <h3 className="text-base font-bold flex items-center gap-2 text-foreground">
                       {budget.category === 'Overall' ? 'Overall Budget' : budget.category}
                       {over && <AlertTriangle className="w-4 h-4 text-negative" />}
                     </h3>
@@ -167,20 +166,20 @@ function Budgets() {
                     </p>
                   </div>
                   <div className="flex flex-col items-end gap-2">
-                    <p className="text-lg font-mono">
+                    <p className="text-base font-mono">
                       <span className={over ? 'text-negative font-bold' : 'text-foreground'}>₹{actual.toFixed(2)}</span>
                       <span className="text-muted-foreground text-sm"> / ₹{target.toFixed(2)}</span>
                     </p>
-                    <button onClick={() => handleDelete(budget.id)} className="text-muted-foreground hover:text-negative p-1">
+                    <button onClick={() => handleDelete(budget.id)} className="text-muted-foreground hover:text-negative p-1 cursor-pointer">
                       <Trash2 className="w-4 h-4" />
                     </button>
                   </div>
                 </div>
                 
                 {/* Progress Bar */}
-                <div className="w-full h-3 bg-muted rounded-none overflow-hidden">
+                <div className="w-full h-2.5 bg-muted rounded overflow-hidden">
                   <div 
-                    className={`h-full transition-all duration-500 ${over ? 'bg-negative' : percent > 80 ? 'bg-primary' : 'bg-positive'}`}
+                    className={`h-full transition-all duration-500 rounded ${over ? 'bg-negative' : percent > 80 ? 'bg-primary' : 'bg-positive'}`}
                     style={{ width: `${percent}%` }}
                   />
                 </div>

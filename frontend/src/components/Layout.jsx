@@ -20,58 +20,61 @@ function Layout() {
   return (
     <div className="min-h-screen bg-background flex flex-col md:flex-row text-foreground">
       {/* Mobile Header */}
-      <div className="md:hidden flex items-center justify-between p-4 bg-secondary text-secondary-foreground border-b border-border z-50 sticky top-0">
-        <h1 className="text-xl font-bold text-secondary-foreground">Finance App</h1>
-        <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="p-2 text-secondary-foreground/80 hover:bg-primary/50 rounded-none transition-colors cursor-pointer">
-          {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+      <div className="md:hidden flex items-center justify-between px-4 py-3 bg-sidebar border-b border-border z-50 sticky top-0">
+        <h1 className="text-lg font-bold text-sidebar-foreground">Finance App</h1>
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="p-2 text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-active/40 rounded transition-colors cursor-pointer"
+        >
+          {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
       </div>
 
       {/* Sidebar */}
       <aside className={`
         ${mobileMenuOpen ? 'flex' : 'hidden'} 
-        md:flex flex-col w-full md:w-64 bg-secondary text-secondary-foreground border-r border-border
-        fixed md:relative z-40 h-[calc(100vh-73px)] md:h-screen top-[73px] md:top-0
+        md:flex flex-col w-full md:w-60 bg-sidebar border-r border-border
+        fixed md:sticky z-40 top-[53px] md:top-0 h-[calc(100vh-53px)] md:h-screen overflow-y-auto
       `}>
-        <div className="p-6 hidden md:block">
-          <h1 className="text-2xl font-bold text-secondary-foreground">Finance App</h1>
+        <div className="px-5 py-5 hidden md:block border-b border-border/50">
+          <h1 className="text-lg font-bold text-sidebar-foreground tracking-tight">Finance App</h1>
         </div>
-        <nav className="flex-1 px-4 py-4 md:py-0 space-y-2 overflow-y-auto">
+        <nav className="flex-1 px-3 py-3 space-y-1">
           {navItems.map((item) => (
             <Link
               key={item.name}
               to={item.path}
               onClick={() => setMobileMenuOpen(false)}
-              className={`flex items-center gap-3 px-4 py-3 rounded-none transition-colors cursor-pointer ${
+              className={`flex items-center gap-3 px-3 py-2.5 rounded transition-colors cursor-pointer text-sm ${
                 location.pathname === item.path
-                  ? 'bg-primary text-primary-foreground border-l-4 border-primary-foreground'
-                  : 'text-secondary-foreground/80 hover:bg-primary/50 hover:text-secondary-foreground border-l-4 border-transparent'
+                  ? 'bg-sidebar-active text-white font-semibold'
+                  : 'text-sidebar-foreground/70 hover:bg-sidebar-active/30 hover:text-sidebar-foreground'
               }`}
             >
               {item.icon}
-              <span className="font-medium">{item.name}</span>
+              <span>{item.name}</span>
             </Link>
           ))}
         </nav>
-        <div className="p-4 border-t border-border mt-auto">
+        <div className="px-4 py-3 border-t border-border/50 mt-auto">
           <div className="flex items-center justify-between">
-            <div className="flex flex-col">
-              <span className="text-sm font-medium">{user?.username}</span>
-              <span className="text-xs text-muted-foreground">{user?.role}</span>
+            <div className="flex flex-col min-w-0">
+              <span className="text-sm font-medium text-sidebar-foreground truncate">{user?.username}</span>
+              <span className="text-xs text-sidebar-foreground/50">{user?.role}</span>
             </div>
             <button
               onClick={logout}
-              className="p-2 text-secondary-foreground/80 hover:text-secondary-foreground hover:bg-primary/50 rounded-none transition-colors cursor-pointer"
+              className="p-2 text-sidebar-foreground/50 hover:text-sidebar-foreground hover:bg-sidebar-active/30 rounded transition-colors cursor-pointer"
               title="Logout"
             >
-              <LogOut className="w-5 h-5" />
+              <LogOut className="w-4 h-4" />
             </button>
           </div>
         </div>
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 overflow-auto bg-background p-4 md:p-8">
+      <main className="flex-1 overflow-auto p-4 md:p-8">
         <Outlet />
       </main>
     </div>

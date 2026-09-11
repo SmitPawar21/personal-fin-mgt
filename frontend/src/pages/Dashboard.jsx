@@ -79,7 +79,7 @@ function Dashboard() {
   const categoryArray = Object.entries(categoryTotals)
     .map(([cat, amt]) => ({ cat, amt }))
     .sort((a, b) => b.amt - a.amt)
-    .slice(0, 5); // Top 5 categories
+    .slice(0, 5);
     
   const maxCatAmt = categoryArray.length > 0 ? categoryArray[0].amt : 1;
 
@@ -92,16 +92,16 @@ function Dashboard() {
       {/* Header & Controls */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end border-b border-border pb-4 gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Welcome back, {user?.username}</h1>
-          <p className="text-muted-foreground mt-1">Here is your financial overview.</p>
+          <h1 className="text-2xl font-bold text-foreground">Welcome back, {user?.username}</h1>
+          <p className="text-muted-foreground text-sm mt-1">Here is your financial overview.</p>
         </div>
-        <div className="flex items-center gap-2 bg-card border border-border p-1.5 rounded-none">
-          <Calendar className="w-5 h-5 text-muted-foreground ml-2" />
+        <div className="flex items-center gap-2 bg-card border border-border px-3 py-1.5 rounded">
+          <Calendar className="w-4 h-4 text-muted-foreground" />
           <input 
             type="month" 
             value={selectedMonth}
             onChange={(e) => setSelectedMonth(e.target.value)}
-            className="bg-transparent border-none focus:ring-0 text-sm font-medium pr-2"
+            className="bg-transparent border-none focus:ring-0 text-sm font-medium text-foreground"
           />
         </div>
       </div>
@@ -109,7 +109,7 @@ function Dashboard() {
       {loading ? (
         <div className="flex items-center justify-center py-20 text-muted-foreground animate-pulse">Loading dashboard data...</div>
       ) : error ? (
-        <div className="bg-red-50 text-negative p-4 rounded-none border border-red-200">
+        <div className="bg-negative/10 text-negative p-4 rounded border border-negative/30">
           <h2 className="font-semibold flex items-center gap-2 mb-2"><AlertCircle className="w-5 h-5" /> Error Loading Data</h2>
           <p className="text-sm">{error}</p>
         </div>
@@ -118,20 +118,20 @@ function Dashboard() {
           
           {/* MONTHLY OVERVIEW */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="bg-card p-5 rounded-none border border-border  flex flex-col justify-between">
-              <h3 className="text-sm font-medium text-muted-foreground">Total Income</h3>
+            <div className="bg-card p-5 rounded border border-border">
+              <h3 className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Total Income</h3>
               <p className="text-2xl font-bold text-positive mt-2">₹{monthlyIncome.toFixed(2)}</p>
             </div>
-            <div className="bg-card p-5 rounded-none border border-border  flex flex-col justify-between">
-              <h3 className="text-sm font-medium text-muted-foreground">Total Expenses</h3>
+            <div className="bg-card p-5 rounded border border-border">
+              <h3 className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Total Expenses</h3>
               <p className="text-2xl font-bold text-negative mt-2">₹{monthlyExpenses.toFixed(2)}</p>
             </div>
-            <div className="bg-card p-5 rounded-none border border-border  flex flex-col justify-between">
-              <h3 className="text-sm font-medium text-muted-foreground">Monthly Savings</h3>
-              <p className="text-2xl font-bold text-primary mt-2">₹{Number(analytics?.monthlySavings || 0).toFixed(2)}</p>
+            <div className="bg-card p-5 rounded border border-border">
+              <h3 className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Monthly Savings</h3>
+              <p className="text-2xl font-bold text-foreground mt-2">₹{Number(analytics?.monthlySavings || 0).toFixed(2)}</p>
             </div>
-            <div className={`bg-card p-5 rounded-none border  flex flex-col justify-between ${remainingBudget < 0 ? 'border-red-500 bg-muted' : 'border-border'}`}>
-              <h3 className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+            <div className={`bg-card p-5 rounded border ${remainingBudget < 0 ? 'border-negative' : 'border-border'}`}>
+              <h3 className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
                 Remaining Budget {overallBudgetAmount === 0 && '(Not Set)'}
               </h3>
               <p className={`text-2xl font-bold mt-2 ${remainingBudget < 0 ? 'text-negative' : 'text-foreground'}`}>
@@ -140,47 +140,47 @@ function Dashboard() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {/* CHART 1: Income vs Expense */}
-            <div className="bg-card p-6 rounded-none border border-border ">
-              <h2 className="text-lg font-bold mb-6">Income vs Expense</h2>
-              <div className="space-y-6">
+            <div className="bg-card p-5 rounded border border-border">
+              <h2 className="text-sm font-bold mb-5 text-foreground">Income vs Expense</h2>
+              <div className="space-y-5">
                 <div>
-                  <div className="flex justify-between text-sm mb-1">
-                    <span className="font-medium text-muted-foreground">Income</span>
-                    <span className="font-bold text-positive">₹{monthlyIncome.toFixed(2)}</span>
+                  <div className="flex justify-between text-sm mb-1.5">
+                    <span className="text-muted-foreground text-xs">Income</span>
+                    <span className="font-bold text-positive text-sm">₹{monthlyIncome.toFixed(2)}</span>
                   </div>
-                  <div className="w-full h-4 bg-muted rounded-none overflow-hidden">
-                    <div className="h-full bg-positive rounded-none" style={{ width: `${incPercent}%` }}></div>
+                  <div className="w-full h-3 bg-muted rounded overflow-hidden">
+                    <div className="h-full bg-positive rounded" style={{ width: `${incPercent}%` }}></div>
                   </div>
                 </div>
                 <div>
-                  <div className="flex justify-between text-sm mb-1">
-                    <span className="font-medium text-muted-foreground">Expense</span>
-                    <span className="font-bold text-negative">₹{monthlyExpenses.toFixed(2)}</span>
+                  <div className="flex justify-between text-sm mb-1.5">
+                    <span className="text-muted-foreground text-xs">Expense</span>
+                    <span className="font-bold text-negative text-sm">₹{monthlyExpenses.toFixed(2)}</span>
                   </div>
-                  <div className="w-full h-4 bg-muted rounded-none overflow-hidden">
-                    <div className="h-full bg-negative rounded-none" style={{ width: `${expPercent}%` }}></div>
+                  <div className="w-full h-3 bg-muted rounded overflow-hidden">
+                    <div className="h-full bg-negative rounded" style={{ width: `${expPercent}%` }}></div>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* CHART 2: Category-wise Expenses */}
-            <div className="bg-card p-6 rounded-none border border-border ">
-              <h2 className="text-lg font-bold mb-6">Top Spending Categories</h2>
+            <div className="bg-card p-5 rounded border border-border">
+              <h2 className="text-sm font-bold mb-5 text-foreground">Top Spending Categories</h2>
               {categoryArray.length === 0 ? (
                 <p className="text-sm text-muted-foreground text-center py-4">No expenses recorded this month.</p>
               ) : (
-                <div className="space-y-4">
+                <div className="space-y-3">
                   {categoryArray.map(c => (
                     <div key={c.cat}>
                       <div className="flex justify-between text-sm mb-1">
-                        <span className="font-medium truncate pr-4">{c.cat}</span>
-                        <span className="font-bold whitespace-nowrap">₹{c.amt.toFixed(2)}</span>
+                        <span className="text-muted-foreground text-xs truncate pr-4">{c.cat}</span>
+                        <span className="font-bold whitespace-nowrap text-sm">₹{c.amt.toFixed(2)}</span>
                       </div>
-                      <div className="w-full h-2 bg-muted rounded-none overflow-hidden">
-                        <div className="h-full bg-muted rounded-none" style={{ width: `${(c.amt / maxCatAmt) * 100}%` }}></div>
+                      <div className="w-full h-2 bg-muted rounded overflow-hidden">
+                        <div className="h-full bg-primary rounded" style={{ width: `${(c.amt / maxCatAmt) * 100}%` }}></div>
                       </div>
                     </div>
                   ))}
@@ -189,14 +189,14 @@ function Dashboard() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             {/* BUDGETS PROGRESS */}
-            <div className="bg-card p-6 rounded-none border border-border  lg:col-span-1 flex flex-col">
-              <h2 className="text-lg font-bold mb-4 flex items-center gap-2"><Wallet className="w-5 h-5 text-primary" /> Budget Progress</h2>
+            <div className="bg-card p-5 rounded border border-border lg:col-span-1 flex flex-col">
+              <h2 className="text-sm font-bold mb-4 flex items-center gap-2 text-foreground"><Wallet className="w-4 h-4 text-muted-foreground" /> Budget Progress</h2>
               {budgets.length === 0 ? (
                 <p className="text-sm text-muted-foreground text-center py-4">No budgets set for this month.</p>
               ) : (
-                <div className="space-y-5 flex-1">
+                <div className="space-y-4 flex-1">
                   {budgets.slice(0, 4).map(b => {
                     const actual = b.category === 'Overall' 
                       ? monthlyExpenses 
@@ -208,13 +208,13 @@ function Dashboard() {
                     return (
                       <div key={b.id}>
                         <div className="flex justify-between text-sm mb-1">
-                          <span className="font-medium truncate pr-2">{b.category}</span>
+                          <span className="text-xs text-muted-foreground truncate pr-2">{b.category}</span>
                           <span className={`font-bold text-xs ${isOver ? 'text-negative' : 'text-muted-foreground'}`}>
                             ₹{actual.toFixed(0)} / ₹{target.toFixed(0)}
                           </span>
                         </div>
-                        <div className="w-full h-1.5 bg-muted rounded-none overflow-hidden">
-                          <div className={`h-full rounded-none ${isOver ? 'bg-negative' : 'bg-primary'}`} style={{ width: `${percent}%` }}></div>
+                        <div className="w-full h-1.5 bg-muted rounded overflow-hidden">
+                          <div className={`h-full rounded ${isOver ? 'bg-negative' : 'bg-positive'}`} style={{ width: `${percent}%` }}></div>
                         </div>
                       </div>
                     );
@@ -224,12 +224,12 @@ function Dashboard() {
             </div>
 
             {/* SAVINGS & GOALS */}
-            <div className="bg-card p-6 rounded-none border border-border  lg:col-span-1 flex flex-col">
-              <h2 className="text-lg font-bold mb-4 flex items-center gap-2"><Target className="w-5 h-5 text-primary" /> Active Goals</h2>
+            <div className="bg-card p-5 rounded border border-border lg:col-span-1 flex flex-col">
+              <h2 className="text-sm font-bold mb-4 flex items-center gap-2 text-foreground"><Target className="w-4 h-4 text-muted-foreground" /> Active Goals</h2>
               {goals.length === 0 ? (
                 <p className="text-sm text-muted-foreground text-center py-4">No active savings goals.</p>
               ) : (
-                <div className="space-y-5 flex-1">
+                <div className="space-y-4 flex-1">
                   {goals.slice(0, 4).map(g => {
                     const progress = Math.max(0, Number(analytics?.overallSavings || 0));
                     const target = Number(g.target_amount);
@@ -237,11 +237,11 @@ function Dashboard() {
                     return (
                       <div key={g.id}>
                         <div className="flex justify-between text-sm mb-1">
-                          <span className="font-medium truncate pr-2">{g.name}</span>
+                          <span className="text-xs text-muted-foreground truncate pr-2">{g.name}</span>
                           <span className="font-bold text-xs text-positive">{percent.toFixed(0)}%</span>
                         </div>
-                        <div className="w-full h-1.5 bg-muted rounded-none overflow-hidden">
-                          <div className="h-full bg-positive rounded-none" style={{ width: `${percent}%` }}></div>
+                        <div className="w-full h-1.5 bg-muted rounded overflow-hidden">
+                          <div className="h-full bg-positive rounded" style={{ width: `${percent}%` }}></div>
                         </div>
                       </div>
                     );
@@ -252,18 +252,16 @@ function Dashboard() {
 
             {/* UPI & INVESTMENTS SUMMARY */}
             <div className="flex flex-col gap-4 lg:col-span-1">
-              <div className="bg-card p-5 rounded-none border border-border  flex items-center justify-between">
+              <div className="bg-card p-5 rounded border border-border flex items-center justify-between">
                 <div>
-                  <h3 className="text-sm font-medium text-muted-foreground mb-1">Monthly UPI Spend</h3>
+                  <h3 className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-1">Monthly UPI Spend</h3>
                   <p className="text-2xl font-bold text-foreground">₹{Number(analytics?.monthlyUpiExpenses || 0).toFixed(2)}</p>
                 </div>
-                <div className="bg-muted p-3 rounded-none text-primary"><SmartphoneNfc className="w-6 h-6" /></div>
+                <div className="bg-muted p-2.5 rounded"><SmartphoneNfc className="w-5 h-5 text-muted-foreground" /></div>
               </div>
 
-              <div className="bg-card p-5 rounded-none border border-border  flex-1 flex flex-col justify-center">
-                <div className="flex justify-between items-start mb-2">
-                  <h3 className="text-sm font-medium text-muted-foreground flex items-center gap-1"><Landmark className="w-4 h-4"/> Investments</h3>
-                </div>
+              <div className="bg-card p-5 rounded border border-border flex-1 flex flex-col justify-center">
+                <h3 className="text-xs font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-1 mb-1"><Landmark className="w-3.5 h-3.5"/> Investments</h3>
                 <p className="text-2xl font-bold text-foreground">₹{investmentsData?.currentValue.toFixed(2)}</p>
                 <div className="flex items-center gap-2 mt-2 text-sm">
                   {investmentsData?.gainLoss >= 0 ? <TrendingUp className="w-4 h-4 text-positive" /> : <TrendingDown className="w-4 h-4 text-negative" />}
@@ -276,32 +274,32 @@ function Dashboard() {
           </div>
 
           {/* RECENT EXPENSES */}
-          <div className="bg-card rounded-none border border-border  overflow-hidden">
-            <div className="p-4 border-b border-border bg-muted/20">
-              <h2 className="text-lg font-bold flex items-center gap-2"><Clock className="w-5 h-5 text-primary" /> Recent Expenses</h2>
+          <div className="bg-card rounded border border-border overflow-hidden">
+            <div className="px-5 py-3 border-b border-border">
+              <h2 className="text-sm font-bold flex items-center gap-2 text-foreground"><Clock className="w-4 h-4 text-muted-foreground" /> Recent Expenses</h2>
             </div>
             {recentExpenses.length === 0 ? (
               <p className="text-sm text-muted-foreground text-center py-6">No expenses recorded this month.</p>
             ) : (
               <div className="overflow-x-auto">
                 <table className="w-full text-sm text-left">
-                  <thead className="text-xs text-muted-foreground uppercase bg-muted/30 border-b border-border">
+                  <thead className="text-xs text-muted-foreground uppercase border-b border-border">
                     <tr>
-                      <th className="px-4 py-3 font-medium">Date</th>
-                      <th className="px-4 py-3 font-medium">Category</th>
-                      <th className="px-4 py-3 font-medium">Description</th>
-                      <th className="px-4 py-3 font-medium text-right">Amount</th>
+                      <th className="px-5 py-3 font-medium">Date</th>
+                      <th className="px-5 py-3 font-medium">Category</th>
+                      <th className="px-5 py-3 font-medium">Description</th>
+                      <th className="px-5 py-3 font-medium text-right">Amount</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-border">
                     {recentExpenses.map(exp => (
-                      <tr key={exp.id} className="hover:bg-muted/10 transition-colors">
-                        <td className="px-4 py-3 whitespace-nowrap text-muted-foreground">{new Date(exp.date).toLocaleDateString()}</td>
-                        <td className="px-4 py-3 whitespace-nowrap">
-                          <span className="bg-muted text-primary px-2 py-0.5 rounded-none text-xs font-medium">{exp.category}</span>
+                      <tr key={exp.id} className="hover:bg-muted/30 transition-colors">
+                        <td className="px-5 py-3 whitespace-nowrap text-muted-foreground">{new Date(exp.date).toLocaleDateString()}</td>
+                        <td className="px-5 py-3 whitespace-nowrap">
+                          <span className="bg-muted text-muted-foreground px-2 py-0.5 rounded text-xs font-medium">{exp.category}</span>
                         </td>
-                        <td className="px-4 py-3 truncate max-w-[200px]">{exp.description || '-'}</td>
-                        <td className="px-4 py-3 text-right font-bold whitespace-nowrap">₹{Number(exp.amount).toFixed(2)}</td>
+                        <td className="px-5 py-3 truncate max-w-[200px] text-foreground">{exp.description || '-'}</td>
+                        <td className="px-5 py-3 text-right font-bold whitespace-nowrap text-foreground">₹{Number(exp.amount).toFixed(2)}</td>
                       </tr>
                     ))}
                   </tbody>

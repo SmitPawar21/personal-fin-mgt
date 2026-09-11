@@ -5,7 +5,7 @@ import { Lock, Users, User, UserPlus, ArrowLeft } from 'lucide-react';
 import { verifyFamilyPassword, getUsers } from '../lib/apiService';
 
 export default function Login() {
-  const [step, setStep] = useState(1); // 1: Family Pass, 2: Select User, 3: Login, 4: Register
+  const [step, setStep] = useState(1);
   const [familyPassword, setFamilyPassword] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -79,20 +79,20 @@ export default function Login() {
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
-      <div className="bg-card w-full max-w-sm border border-border rounded-none  p-6 relative">
+      <div className="bg-card w-full max-w-sm border border-border rounded p-6 relative">
         
         {/* Back Button for Steps 3 and 4 */}
         {(step === 3 || step === 4) && (
           <button 
             onClick={goBackToUsers}
-            className="absolute top-4 left-4 p-2 text-muted-foreground hover:text-foreground rounded-none hover:bg-muted transition-colors"
+            className="absolute top-4 left-4 p-2 text-muted-foreground hover:text-foreground rounded hover:bg-muted transition-colors cursor-pointer"
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
         )}
 
         <div className="flex flex-col items-center mb-6 pt-2">
-          <div className="p-3 bg-muted rounded-none mb-3">
+          <div className="p-3 bg-muted rounded mb-3">
             {step === 1 && <Lock className="w-6 h-6 text-foreground" />}
             {step === 2 && <Users className="w-6 h-6 text-foreground" />}
             {step === 3 && <User className="w-6 h-6 text-foreground" />}
@@ -113,7 +113,7 @@ export default function Login() {
         </div>
 
         {error && (
-          <div className="mb-4 p-3 bg-red-50 text-negative text-sm border border-red-200 rounded">
+          <div className="mb-4 p-3 bg-negative/10 text-negative text-sm border border-negative/30 rounded">
             {error}
           </div>
         )}
@@ -127,7 +127,7 @@ export default function Login() {
                 placeholder="Family Password"
                 value={familyPassword}
                 onChange={(e) => setFamilyPassword(e.target.value)}
-                className="w-full px-3 py-2 border border-border rounded-none bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                className="w-full px-3 py-2 border border-input rounded bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                 required
                 autoFocus
               />
@@ -135,7 +135,7 @@ export default function Login() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2 px-4 bg-primary text-primary-foreground cursor-pointer font-medium rounded-none hover:bg-muted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 transition-colors"
+              className="w-full py-2 px-4 bg-primary text-primary-foreground cursor-pointer font-medium rounded hover:bg-primary/80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 transition-colors"
             >
               {loading ? 'Verifying...' : 'Continue'}
             </button>
@@ -151,9 +151,9 @@ export default function Login() {
                   <button
                     key={user.id}
                     onClick={() => handleSelectUser(user.username)}
-                    className="w-full flex items-center gap-3 p-3 border border-border rounded-none hover:bg-muted transition-colors text-left"
+                    className="w-full flex items-center gap-3 p-3 border border-border rounded hover:bg-muted transition-colors text-left cursor-pointer"
                   >
-                    <div className="w-10 h-10 bg-muted text-primary rounded-none flex items-center justify-center font-bold">
+                    <div className="w-10 h-10 bg-primary text-primary-foreground rounded flex items-center justify-center font-bold text-sm">
                       {user.username.charAt(0).toUpperCase()}
                     </div>
                     <span className="font-medium flex-1">{user.username}</span>
@@ -166,7 +166,7 @@ export default function Login() {
 
             <button
               onClick={() => { setUsername(''); setPassword(''); setError(''); setStep(4); }}
-              className="w-full flex items-center justify-center gap-2 py-2 px-4 border border-dashed border-primary text-primary font-medium rounded-none hover:bg-muted transition-colors"
+              className="w-full flex items-center justify-center gap-2 py-2 px-4 border border-dashed border-muted-foreground text-muted-foreground font-medium rounded hover:bg-muted hover:text-foreground transition-colors cursor-pointer"
             >
               <UserPlus className="w-4 h-4" />
               Add New Family Member
@@ -183,7 +183,7 @@ export default function Login() {
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-3 py-2 border border-border rounded-none bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                className="w-full px-3 py-2 border border-input rounded bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                 required
                 autoFocus
               />
@@ -191,7 +191,7 @@ export default function Login() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2 px-4 bg-primary text-primary-foreground cursor-pointer font-medium rounded-none hover:bg-muted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 transition-colors"
+              className="w-full py-2 px-4 bg-primary text-primary-foreground cursor-pointer font-medium rounded hover:bg-primary/80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 transition-colors"
             >
               {loading ? 'Signing in...' : 'Sign In'}
             </button>
@@ -209,7 +209,7 @@ export default function Login() {
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full px-3 py-2 border border-border rounded-none bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                className="w-full px-3 py-2 border border-input rounded bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                 required
                 autoFocus
               />
@@ -222,14 +222,14 @@ export default function Login() {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-3 py-2 border border-border rounded-none bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                className="w-full px-3 py-2 border border-input rounded bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                 required
               />
             </div>
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2 px-4 bg-primary text-primary-foreground cursor-pointer font-medium rounded-none hover:bg-muted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 transition-colors"
+              className="w-full py-2 px-4 bg-primary text-primary-foreground cursor-pointer font-medium rounded hover:bg-primary/80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 transition-colors"
             >
               {loading ? 'Registering...' : 'Register'}
             </button>
